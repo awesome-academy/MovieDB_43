@@ -1,4 +1,4 @@
-package com.asterisk.tuandao.themoviedb.util
+package com.asterisk.tuandao.themoviedb.ui.base
 
 import com.asterisk.tuandao.themoviedb.di.DaggerAppComponent
 import dagger.android.AndroidInjector

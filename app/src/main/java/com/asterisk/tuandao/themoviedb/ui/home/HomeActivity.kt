@@ -13,7 +13,5 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun initComponents() {
-
-    }
+    override fun initComponents() {}
 }
