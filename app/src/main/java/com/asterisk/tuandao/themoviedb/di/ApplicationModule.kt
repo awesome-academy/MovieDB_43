@@ -13,10 +13,12 @@ import dagger.Provides
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+
 
 @Module(includes = [ViewModelModule::class])
 abstract class ApplicationModule {
@@ -67,15 +69,30 @@ abstract class ApplicationModule {
         @JvmStatic
         @Singleton
         @Provides
-        fun provideOkHttpClient(interceptor: Interceptor, cache: Cache) =
-            OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .cache(cache)
-                .build()
+        fun provideHttpLog(): HttpLoggingInterceptor {
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
+            return interceptor
+        }
 
         @JvmStatic
         @Singleton
         @Provides
+        fun provideOkHttpClient(
+            interceptor: Interceptor,
+            httpLoggingInterceptor: HttpLoggingInterceptor, cache: Cache
+        ) {
+            val okHttpClient = OkHttpClient.Builder()
+            if (BuildConfig.DEBUG) {
+                okHttpClient.addInterceptor(httpLoggingInterceptor)
+            }
+            okHttpClient.addInterceptor(interceptor)
+                .cache(cache)
+                .build()
+        }
+
+        @JvmStatic
+        @Singleton
         fun provideRetrofit(okHttpClient: OkHttpClient) =
             Retrofit.Builder()
                 .client(okHttpClient)

@@ -1,7 +1,7 @@
 package com.asterisk.tuandao.themoviedb.di
 
 import android.app.Application
-import com.asterisk.tuandao.themoviedb.data.source.repository.MovieRepository
+import com.asterisk.tuandao.themoviedb.data.source.repository.MoviesRepository
 import com.asterisk.tuandao.themoviedb.di.scope.ApplicationModule
 import com.asterisk.tuandao.themoviedb.ui.base.MovieApplication
 import dagger.BindsInstance
@@ -17,6 +17,8 @@ import javax.inject.Singleton
         ApplicationModule::class]
 )
 interface AppComponent : AndroidInjector<MovieApplication> {
+
+    fun getMovieRepository(): MoviesRepository
 
     @Component.Builder
     interface Builder {
