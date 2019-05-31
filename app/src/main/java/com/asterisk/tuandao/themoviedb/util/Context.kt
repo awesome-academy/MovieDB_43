@@ -1,0 +1,15 @@
+package com.asterisk.tuandao.themoviedb.util
+
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
+
+fun Context.hasNetwork(): Boolean {
+    var isConnected = false // Initial Value
+    val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE)
+            as ConnectivityManager
+    val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+    if (activeNetwork != null && activeNetwork.isConnected)
+        isConnected = true
+    return isConnected
+}

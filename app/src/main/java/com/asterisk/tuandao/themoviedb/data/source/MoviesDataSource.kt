@@ -1,6 +1,6 @@
 package com.asterisk.tuandao.themoviedb.data.source
 
-interface MovieDataSource {
+interface MoviesDataSource {
 
     interface Local {
 

@@ -1,6 +1,10 @@
 package com.asterisk.tuandao.themoviedb.data.source.repository
 
-import com.asterisk.tuandao.themoviedb.data.source.MovieDataSource
+import com.asterisk.tuandao.themoviedb.data.source.MoviesDataSource
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MovieRepository : MovieDataSource.Local, MovieDataSource.Remote{
+@Singleton
+class MovieRepository @Inject constructor(val moviesRemoteDataSource: MoviesDataSource.Remote) : MoviesDataSource.Local,
+    MoviesDataSource.Remote {
 }
