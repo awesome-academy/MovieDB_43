@@ -1,10 +1,11 @@
-package com.asterisk.tuandao.themoviedb.di
+package com.asterisk.tuandao.themoviedb.di.scope
 
 import android.app.Application
 import com.asterisk.tuandao.themoviedb.BuildConfig
 import com.asterisk.tuandao.themoviedb.data.source.MoviesDataSource
 import com.asterisk.tuandao.themoviedb.data.source.remote.MoviesApi
 import com.asterisk.tuandao.themoviedb.data.source.remote.MoviesRemoteDataSource
+import com.asterisk.tuandao.themoviedb.di.ViewModelModule
 import com.asterisk.tuandao.themoviedb.util.Constants
 import com.asterisk.tuandao.themoviedb.util.hasNetwork
 import dagger.Binds
@@ -18,7 +19,6 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-
 
 @Module(includes = [ViewModelModule::class])
 abstract class ApplicationModule {
@@ -36,11 +36,9 @@ abstract class ApplicationModule {
             var request = chain.request()
             val originalHttpUrl = request.url()
             val newUrl = originalHttpUrl.newBuilder()
-                .addQueryParameter(
-                    QUERRY_PARAMETER_API_KEY,
-                    API_KEY
-                )
+                .addQueryParameter(QUERRY_PARAMETER_API_KEY, API_KEY)
                 .build()
+
             request = if (application.hasNetwork()) {
                 request.newBuilder()
                     .url(newUrl)
@@ -69,30 +67,31 @@ abstract class ApplicationModule {
         @JvmStatic
         @Singleton
         @Provides
-        fun provideHttpLog(): HttpLoggingInterceptor {
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
-            return interceptor
+        fun provideLog(): HttpLoggingInterceptor {
+            val interceptorLog = HttpLoggingInterceptor()
+            interceptorLog.level = HttpLoggingInterceptor.Level.BODY
+            return interceptorLog
         }
 
         @JvmStatic
         @Singleton
         @Provides
         fun provideOkHttpClient(
-            interceptor: Interceptor,
-            httpLoggingInterceptor: HttpLoggingInterceptor, cache: Cache
-        ) {
+            interceptor: Interceptor
+            , httpLoggingInterceptor: HttpLoggingInterceptor, cache: Cache
+        ): OkHttpClient {
             val okHttpClient = OkHttpClient.Builder()
             if (BuildConfig.DEBUG) {
                 okHttpClient.addInterceptor(httpLoggingInterceptor)
             }
-            okHttpClient.addInterceptor(interceptor)
-                .cache(cache)
+            return okHttpClient.cache(cache)
+                .addInterceptor(interceptor)
                 .build()
         }
 
         @JvmStatic
         @Singleton
+        @Provides
         fun provideRetrofit(okHttpClient: OkHttpClient) =
             Retrofit.Builder()
                 .client(okHttpClient)
@@ -106,5 +105,4 @@ abstract class ApplicationModule {
     @Singleton
     @Binds
     abstract fun provideRemoteDataSource(remoteDataSource: MoviesRemoteDataSource): MoviesDataSource.Remote
-
 }
