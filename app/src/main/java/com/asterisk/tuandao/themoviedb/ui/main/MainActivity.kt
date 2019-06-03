@@ -13,16 +13,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
+
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     override val layoutId: Int
         get() = R.layout.activity_main
     private val fragmentManager = supportFragmentManager
     private val container = R.id.frameContainer
-
-    private lateinit var homeViewModel: HomeViewModel
-    @Inject
-    lateinit var viewModelFactory: MovieViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

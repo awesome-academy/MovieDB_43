@@ -1,4 +1,4 @@
-package com.asterisk.tuandao.themoviedb.ui.home
+package com.asterisk.tuandao.themoviedb.ui.main
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -11,11 +11,13 @@ import com.asterisk.tuandao.themoviedb.util.Event
 import com.asterisk.tuandao.themoviedb.util.handleData
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor
-    (
+class MainViewModel @Inject constructor(
     application: Application,
     val moviesRepository: MoviesRepository
 ) : BaseViewModel(application) {
+    private val _selectedGenre = MutableLiveData<Event<String>>()
+    val selectedGenre: LiveData<Event<String>>
+        get() = _selectedGenre
 
     init {
         getMovies()
@@ -32,6 +34,10 @@ class HomeViewModel @Inject constructor
         compositeDisposable.add(
             moviesRepository.getMovies(DEFAULT_PAGE).handleData(_movies)
         )
+    }
+
+    fun openGenreMovie(genreId: String) {
+        _selectedGenre.value = Event(genreId)
     }
 
     fun openDetailMovie(movieId: Int) {

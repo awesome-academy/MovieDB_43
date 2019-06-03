@@ -1,5 +1,6 @@
 package com.asterisk.tuandao.themoviedb.data.source.model
 
+import com.asterisk.tuandao.themoviedb.data.source.model.respone.GenreResponse
 import com.google.gson.annotations.SerializedName
 
 class Movie {
@@ -10,7 +11,7 @@ class Movie {
     val backdropPath: String? = null
 
     @SerializedName("genres")
-    val genres: List<Genre>? = null
+    val genres: List<GenreResponse>? = null
 
     @SerializedName("title")
     val title: String? = null
