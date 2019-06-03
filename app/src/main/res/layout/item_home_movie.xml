@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="movie"
+                  type="com.asterisk.tuandao.themoviedb.data.source.model.Movie"/>
+        <variable name="viewmodel"
+                  type="com.asterisk.tuandao.themoviedb.ui.home.HomeViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearMovie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_back_ground_home"
+            android:layout_marginBottom="@dimen/dp_16">
+        <ImageView
+                android:id="@+id/imageMovie"
+                android:layout_width="@dimen/dp_150"
+                android:layout_height="0dp"
+                android:scaleType="fitXY"
+                app:layout_constraintDimensionRatio="1.5:2"
+                app:imageUrl="@{movie.posterPath}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:background="@color/color_primary"/>
+        <TextView
+                android:id="@+id/textMovieTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_16"
+                android:text="@{movie.title}"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                app:layout_constraintTop_toBottomOf="@id/imageMovie"
+                app:layout_constraintStart_toStartOf="@+id/imageMovie"
+                app:layout_constraintEnd_toEndOf="@id/imageMovie"
+                tools:text="@string/fake_text_movie_title"
+                style="@style/TextMovieTitle"/>
+        <TextView
+                android:id="@+id/textScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(movie.voteAverage)}"
+                app:layout_constraintTop_toBottomOf="@id/textMovieTitle"
+                app:layout_constraintStart_toStartOf="@id/textMovieTitle"
+                tools:text="@string/fake_text_imdb_score"
+                style="@style/TextScoreIDMB"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
