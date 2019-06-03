@@ -17,20 +17,21 @@ class HomeViewModel @Inject constructor
     val moviesRepository: MoviesRepository
 ) : BaseViewModel(application) {
 
-    init {
-        getMovies()
+    private val _movies: MutableLiveData<Resources<MovieResponse>> by lazy {
+        MutableLiveData<Resources<MovieResponse>>().also {
+            getMovies(it)
+        }
     }
-
-    private val _movies = MutableLiveData<Resources<MovieResponse>>()
     val movie: LiveData<Resources<MovieResponse>>
         get() = _movies
     private val _openMovieEvent = MutableLiveData<Event<Int>>()
     val openMovieEvent: LiveData<Event<Int>>
         get() = _openMovieEvent
 
-    fun getMovies() {
+    fun getMovies(mutableLiveData: MutableLiveData<Resources<MovieResponse>>) {
+        _movies.value = Resources.loading(true)
         compositeDisposable.add(
-            moviesRepository.getMovies(DEFAULT_PAGE).handleData(_movies)
+            moviesRepository.getMovies(DEFAULT_PAGE).handleData(mutableLiveData)
         )
     }
 
