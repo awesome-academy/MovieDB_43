@@ -10,44 +10,48 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearMovie"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/color_back_ground_home"
-            android:layout_marginBottom="@dimen/dp_16">
+        android:id="@+id/linearMovie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:background="@color/color_back_ground_home"
+        android:onClick="@{() -> viewmodel.openDetailMovie(movie.id)}">
+
         <ImageView
-                android:id="@+id/imageMovie"
-                android:layout_width="@dimen/dp_150"
-                android:layout_height="0dp"
-                android:scaleType="fitXY"
-                app:layout_constraintDimensionRatio="1.5:2"
-                app:imageUrl="@{movie.posterPath}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:background="@color/color_primary"/>
+            android:id="@+id/imageMovie"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            app:imageUrl="@{movie.posterPath}"
+            app:layout_constraintDimensionRatio="1.5:2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/color_primary" />
+
         <TextView
-                android:id="@+id/textMovieTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_16"
-                android:text="@{movie.title}"
-                android:ellipsize="marquee"
-                android:singleLine="true"
-                app:layout_constraintTop_toBottomOf="@id/imageMovie"
-                app:layout_constraintStart_toStartOf="@+id/imageMovie"
-                app:layout_constraintEnd_toEndOf="@id/imageMovie"
-                tools:text="@string/fake_text_movie_title"
-                style="@style/TextMovieTitle"/>
+            android:id="@+id/textMovieTitle"
+            style="@style/TextMovieTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:text="@{movie.title}"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintEnd_toEndOf="@id/imageMovie"
+            app:layout_constraintStart_toStartOf="@+id/imageMovie"
+            app:layout_constraintTop_toBottomOf="@id/imageMovie"
+            tools:text="@string/fake_text_movie_title" />
+
         <TextView
-                android:id="@+id/textScore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{String.valueOf(movie.voteAverage)}"
-                app:layout_constraintTop_toBottomOf="@id/textMovieTitle"
-                app:layout_constraintStart_toStartOf="@id/textMovieTitle"
-                tools:text="@string/fake_text_imdb_score"
-                style="@style/TextScoreIDMB"/>
+            android:id="@+id/textScore"
+            style="@style/TextScoreIDMB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(movie.voteAverage)}"
+            app:layout_constraintStart_toStartOf="@id/textMovieTitle"
+            app:layout_constraintTop_toBottomOf="@id/textMovieTitle"
+            tools:text="@string/fake_text_imdb_score" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

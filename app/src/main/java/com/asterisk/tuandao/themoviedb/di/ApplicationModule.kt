@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 
-@Module(includes = [MainViewModelModule::class])
+@Module
 abstract class ApplicationModule {
 
     @Module

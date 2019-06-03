@@ -7,6 +7,7 @@ import com.asterisk.tuandao.themoviedb.data.source.model.respone.MovieResponse
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.data.source.repository.MoviesRepository
 import com.asterisk.tuandao.themoviedb.ui.base.BaseViewModel
+import com.asterisk.tuandao.themoviedb.util.Event
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -20,6 +21,9 @@ class HomeViewModel @Inject constructor
     private val _movies = MutableLiveData<Resources<MovieResponse>>()
     val movie: LiveData<Resources<MovieResponse>>
         get() = _movies
+    private val _openMovieEvent = MutableLiveData<Event<Int>>()
+    val openMovieEvent: LiveData<Event<Int>>
+        get() = _openMovieEvent
 
     fun getMovies() {
         _movies.value = Resources.loading(true)
@@ -36,6 +40,10 @@ class HomeViewModel @Inject constructor
                     }
                 )
         )
+    }
+
+    fun openDetailMovie(movieId: Int) {
+        _openMovieEvent.value = Event(movieId)
     }
 
     companion object {

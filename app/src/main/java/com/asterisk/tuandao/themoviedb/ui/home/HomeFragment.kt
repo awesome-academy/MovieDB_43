@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,28 +14,20 @@ import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.databinding.FragmentHomeBinding
 import com.asterisk.tuandao.themoviedb.ui.base.BaseFragment
-import com.asterisk.tuandao.themoviedb.util.MovieViewModelFactory
+import com.asterisk.tuandao.themoviedb.util.Event
 import com.asterisk.tuandao.themoviedb.util.showMessage
 import javax.inject.Inject
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(), HomeMovieNavigator {
 
     override val layoutId: Int
         get() = R.layout.fragment_home
 
-    @Inject
-    lateinit var viewModelFactory: MovieViewModelFactory
-    private lateinit var homeViewModel: HomeViewModel
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var viewDataBinding: FragmentHomeBinding
     var itemDecoration: RecyclerView.ItemDecoration? = null
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        homeViewModel = ViewModelProviders.of(this as Fragment, viewModelFactory).get(HomeViewModel::class.java)
-        homeViewModel.getMovies()
-    }
+    @Inject
+    lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewDataBinding = FragmentHomeBinding.inflate(inflater, container, false).apply {
@@ -47,18 +38,28 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun initAdapter() {
-        homeAdapter = HomeAdapter(ArrayList(), homeViewModel)
-        viewDataBinding.recyclerMovie.layoutManager = GridLayoutManager(activity, SPAN_COUNT)
-        viewDataBinding.recyclerMovie.addItemDecoration(DividerItemDecoration(activity, 0))
-        viewDataBinding.recyclerMovie.adapter = homeAdapter
+        viewDataBinding.viewmodel?.let {
+            homeAdapter = HomeAdapter(ArrayList(), it)
+        }
+        with(viewDataBinding) {
+            recyclerMovie.layoutManager = GridLayoutManager(activity, SPAN_COUNT)
+            recyclerMovie.addItemDecoration(DividerItemDecoration(activity, 0))
+            recyclerMovie.adapter = homeAdapter
+        }
     }
 
     override fun initComponents() {
+        doObserveClickedMovie()
         doObserve()
     }
 
+    override fun openMovieDetails(movieId: Int) {
+        //open details movie
+    }
+
     private fun doObserve() {
-        homeViewModel.movie.observe(this as Fragment, Observer {
+        viewDataBinding.viewmodel?.getMovies()
+        viewDataBinding.viewmodel?.movie?.observe(this as Fragment, Observer {
             when (it) {
                 is Resources.Progress -> {
                     //do something
@@ -89,6 +90,18 @@ class HomeFragment : BaseFragment() {
     private fun showError(message: String?) {
         message?.let {
             activity?.showMessage(it)
+        }
+    }
+
+    private fun doObserveClickedMovie() {
+        homeViewModel = homeViewModel.apply {
+            activity?.let {
+                openMovieEvent.observe(it, Observer<Event<Int>> { event ->
+                    event.getContentIfNotHandled()?.let {
+                        openMovieDetails(it)
+                    }
+                })
+            }
         }
     }
 
