@@ -13,7 +13,8 @@ import javax.inject.Singleton
 @Component(
     modules = [AndroidSupportInjectionModule::class,
         ActivityBuildersModule::class,
-        ApplicationModule::class]
+        ApplicationModule::class,
+        ViewModelModule::class]
 )
 interface AppComponent : AndroidInjector<MovieApplication> {
 

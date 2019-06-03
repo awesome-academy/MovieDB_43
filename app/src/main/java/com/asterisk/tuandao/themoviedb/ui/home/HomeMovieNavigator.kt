@@ -2,5 +2,5 @@ package com.asterisk.tuandao.themoviedb.ui.home
 
 interface HomeMovieNavigator {
 
-    fun openMovieDetails()
+    fun openMovieDetails(movieId: Int)
 }
