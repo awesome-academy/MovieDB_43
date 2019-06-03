@@ -7,10 +7,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MoviesRemoteDataSource @Inject constructor(private val movieService: MoviesApi) : MoviesDataSource.Remote {
+class MoviesRemoteDataSource @Inject constructor(val movieApi: MoviesApi) : MoviesDataSource.Remote {
 
     override fun getMovies(page: Int): Single<MovieResponse> {
-        return movieService.getPopularMovies(page)
+        return movieApi.getPopularMovies(page)
     }
 
 }

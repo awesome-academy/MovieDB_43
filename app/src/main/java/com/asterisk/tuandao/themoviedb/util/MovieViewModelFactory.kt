@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.asterisk.tuandao.themoviedb.R
 import javax.inject.Inject
 import javax.inject.Provider
+import javax.inject.Singleton
 
+@Singleton
 class MovieViewModelFactory @Inject constructor(
     private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
