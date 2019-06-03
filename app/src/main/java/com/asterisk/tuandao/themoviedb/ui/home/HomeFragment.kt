@@ -15,8 +15,6 @@ import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.databinding.FragmentHomeBinding
 import com.asterisk.tuandao.themoviedb.ui.base.BaseFragment
-import com.asterisk.tuandao.themoviedb.util.Constants
-import com.asterisk.tuandao.themoviedb.util.Constants.SPAN_COUNT
 import com.asterisk.tuandao.themoviedb.util.MovieViewModelFactory
 import com.asterisk.tuandao.themoviedb.util.showMessage
 import javax.inject.Inject
@@ -25,12 +23,14 @@ class HomeFragment : BaseFragment() {
 
     override val layoutId: Int
         get() = R.layout.fragment_home
+
     @Inject
     lateinit var viewModelFactory: MovieViewModelFactory
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var viewDataBinding: FragmentHomeBinding
     var itemDecoration: RecyclerView.ItemDecoration? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,7 @@ class HomeFragment : BaseFragment() {
 
     private fun initAdapter() {
         homeAdapter = HomeAdapter(ArrayList(), homeViewModel)
-        viewDataBinding.recyclerMovie.layoutManager = GridLayoutManager(activity, Constants.SPAN_COUNT)
+        viewDataBinding.recyclerMovie.layoutManager = GridLayoutManager(activity, SPAN_COUNT)
         viewDataBinding.recyclerMovie.addItemDecoration(DividerItemDecoration(activity, 0))
         viewDataBinding.recyclerMovie.adapter = homeAdapter
     }
@@ -94,5 +94,6 @@ class HomeFragment : BaseFragment() {
 
     companion object {
         fun newInstance() = HomeFragment()
+        const val SPAN_COUNT = 2
     }
 }

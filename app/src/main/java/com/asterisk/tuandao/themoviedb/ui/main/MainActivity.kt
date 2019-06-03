@@ -10,6 +10,7 @@ import com.asterisk.tuandao.themoviedb.util.switch
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     override val layoutId: Int
