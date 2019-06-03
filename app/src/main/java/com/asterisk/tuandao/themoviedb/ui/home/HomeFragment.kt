@@ -14,6 +14,7 @@ import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.databinding.FragmentHomeBinding
 import com.asterisk.tuandao.themoviedb.ui.base.BaseFragment
+import com.asterisk.tuandao.themoviedb.util.Constants
 import com.asterisk.tuandao.themoviedb.util.showMessage
 import javax.inject.Inject
 
@@ -40,7 +41,7 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
 
         homeAdapter = HomeAdapter(ArrayList(), homeViewModel)
         with(viewDataBinding) {
-            recyclerMovie.layoutManager = GridLayoutManager(activity, SPAN_COUNT)
+            recyclerMovie.layoutManager = GridLayoutManager(activity, Constants.SPAN_COUNT)
             recyclerMovie.setHasFixedSize(true)
             recyclerMovie.addItemDecoration(DividerItemDecoration(activity, 0))
             recyclerMovie.adapter = homeAdapter
@@ -101,6 +102,5 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
 
     companion object {
         fun newInstance() = HomeFragment()
-        const val SPAN_COUNT = 2
     }
 }
