@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">The Movie DB</string>
     <string name="message_throw_exception_viewmodel_factory">unknown model class</string>
+    <string name="title_movies">Movies</string>
+    <string name="title_genres">Genres</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="fake_text_movie_title">Avenger Endgame Infinity war</string>
+    <string name="fake_text_imdb_score">8.7</string>
 </resources>

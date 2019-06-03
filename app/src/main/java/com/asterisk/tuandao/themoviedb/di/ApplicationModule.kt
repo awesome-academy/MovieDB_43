@@ -19,8 +19,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-
-@Module(includes = [ViewModelModule::class])
+@Module(includes = [MainViewModelModule::class])
 abstract class ApplicationModule {
 
     @Module
@@ -81,26 +80,28 @@ abstract class ApplicationModule {
         fun provideOkHttpClient(
             interceptor: Interceptor,
             httpLoggingInterceptor: HttpLoggingInterceptor, cache: Cache
-        ) {
+        ): OkHttpClient {
             val okHttpClient = OkHttpClient.Builder()
             if (BuildConfig.DEBUG) {
                 okHttpClient.addInterceptor(httpLoggingInterceptor)
             }
-            okHttpClient.addInterceptor(interceptor)
+            return okHttpClient.addInterceptor(interceptor)
                 .cache(cache)
                 .build()
         }
 
         @JvmStatic
         @Singleton
-        fun provideRetrofit(okHttpClient: OkHttpClient) =
-            Retrofit.Builder()
+        @Provides
+        fun provideRetrofit(okHttpClient: OkHttpClient): MoviesApi {
+            return Retrofit.Builder()
                 .client(okHttpClient)
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
                 .create(MoviesApi::class.java)
+        }
     }
 
     @Singleton

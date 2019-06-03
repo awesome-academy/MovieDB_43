@@ -3,6 +3,7 @@ package com.asterisk.tuandao.themoviedb.util
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.widget.Toast
 
 fun Context.hasNetwork(): Boolean {
     var isConnected = false // Initial Value
@@ -13,3 +14,5 @@ fun Context.hasNetwork(): Boolean {
         isConnected = true
     return isConnected
 }
+
+fun Context.showMessage(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()

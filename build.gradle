@@ -30,9 +30,10 @@ task clean(type: Delete) {
 ext {
     archLifecycleVersion = "2.0.0"
     retrofitVersion = "2.5.0"
-    daggerVersion = "2.16"
+    daggerVersion = "2.22"
     rxjavaVersion = "2.2.8"
     rxAndroidVersion = "2.1.1"
     retrofitVersion = "2.5.0"
     httpLogInterceptor = "3.14.2"
+    glideVersion = "4.9.0"
 }

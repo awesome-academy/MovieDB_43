@@ -3,4 +3,8 @@
     <color name="color_primary">#008577</color>
     <color name="color_primary_dark">#00574B</color>
     <color name="color_accent">#D81B60</color>
+    <color name="color_silver_score_imdb">#B3BDC8</color>
+    <color name="color_back_ground_home">#47535E</color>
+    <color name="color_blue_icon">#157EFB</color>
+    <color name="color_bold_silver">#343F4B</color>
 </resources>
