@@ -6,4 +6,5 @@
     <string name="title_favorite">Favorite</string>
     <string name="fake_text_movie_title">Avenger Endgame Infinity war</string>
     <string name="fake_text_imdb_score">8.7</string>
+    <string name="default_text_category">Popular Movie</string>
 </resources>
