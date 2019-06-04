@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment
 import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.ui.base.BaseActivity
 import com.asterisk.tuandao.themoviedb.ui.home.HomeFragment
+import com.asterisk.tuandao.themoviedb.ui.home.HomeViewModel
+import com.asterisk.tuandao.themoviedb.util.MovieViewModelFactory
 import com.asterisk.tuandao.themoviedb.util.switch
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -17,6 +20,10 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private val fragmentManager = supportFragmentManager
     private val container = R.id.frameContainer
 
+    private lateinit var homeViewModel: HomeViewModel
+    @Inject
+    lateinit var viewModelFactory: MovieViewModelFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val actionBar = supportActionBar
@@ -24,7 +31,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     override fun initComponents() {
-        var homeFragment = HomeFragment.newInstance() as Fragment
+        val homeFragment = HomeFragment.newInstance() as Fragment
         navigation.setOnNavigationItemSelectedListener(this)
         supportFragmentManager.switch(
             container,
@@ -34,16 +41,21 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        var homeFragment = HomeFragment.newInstance() as Fragment
         when (item.itemId) {
             R.id.navigation_movies -> {
-                item.setIcon(R.drawable.ic_movies_blue)
+                val homeFragment = HomeFragment.newInstance() as Fragment
                 supportFragmentManager.switch(
                     container,
                     homeFragment,
                     MOVIES_FRAGMENT_TAG
                 )
                 return true
+            }
+            R.id.navigation_genres -> {
+                //do something
+            }
+            R.id.navigation_favorite -> {
+                //do something
             }
         }
         return false

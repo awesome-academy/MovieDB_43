@@ -4,6 +4,11 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProviders
+import javax.inject.Inject
 
 fun Context.hasNetwork(): Boolean {
     var isConnected = false // Initial Value
@@ -16,3 +21,6 @@ fun Context.hasNetwork(): Boolean {
 }
 
 fun Context.showMessage(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+
+fun <T : ViewModel> Fragment.obtainViewModel(viewModelClass: Class<T>, viewModelFactory: MovieViewModelFactory) =
+        ViewModelProviders.of(this, viewModelFactory).get(viewModelClass)
