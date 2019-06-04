@@ -7,6 +7,7 @@ import com.asterisk.tuandao.themoviedb.data.source.model.respone.GenreResponse
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.data.source.repository.MoviesRepository
 import com.asterisk.tuandao.themoviedb.ui.base.BaseViewModel
+import com.asterisk.tuandao.themoviedb.util.Event
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -18,6 +19,9 @@ class GenreViewModel @Inject constructor(
     private val _genres = MutableLiveData<Resources<GenreResponse>>()
     val genres: LiveData<Resources<GenreResponse>>
         get() = _genres
+    private val _selectedGenre = MutableLiveData<Event<String>>()
+    val selectedGenre: LiveData<Event<String>>
+        get() = _selectedGenre
 
     init {
         //some bug with thread, have not performed yet
@@ -38,5 +42,9 @@ class GenreViewModel @Inject constructor(
                     }
                 )
         )
+    }
+
+    fun openGenreMovie(genreId: String) {
+        _selectedGenre.value = Event(genreId)
     }
 }

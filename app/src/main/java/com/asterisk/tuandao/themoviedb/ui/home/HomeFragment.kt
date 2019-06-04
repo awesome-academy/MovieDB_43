@@ -15,7 +15,6 @@ import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.databinding.FragmentHomeBinding
 import com.asterisk.tuandao.themoviedb.ui.base.BaseFragment
 import com.asterisk.tuandao.themoviedb.ui.main.MainViewModel
-import com.asterisk.tuandao.themoviedb.util.Event
 import com.asterisk.tuandao.themoviedb.util.showMessage
 import javax.inject.Inject
 
@@ -29,21 +28,23 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
     var itemDecoration: RecyclerView.ItemDecoration? = null
     @Inject
     lateinit var mainViewModel: MainViewModel
+    @Inject
+    lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewDataBinding = FragmentHomeBinding.inflate(inflater, container, false).apply {
-            viewmodel = mainViewModel
+            viewmodel = homeViewModel
         }
         initAdapter()
         return viewDataBinding.root
     }
 
     private fun initAdapter() {
-        mainViewModel.let {
-            homeAdapter = HomeAdapter(ArrayList(), it)
-        }
+
+        homeAdapter = HomeAdapter(ArrayList(), homeViewModel)
         with(viewDataBinding) {
             recyclerMovie.layoutManager = GridLayoutManager(activity, SPAN_COUNT)
+            recyclerMovie.setHasFixedSize(true)
             recyclerMovie.addItemDecoration(DividerItemDecoration(activity, 0))
             recyclerMovie.adapter = homeAdapter
         }
@@ -60,7 +61,7 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
 
     private fun doObserve() {
 //        viewDataBinding.viewmodel?.getMovies()
-        mainViewModel.movie?.observe(this as Fragment, Observer {
+        homeViewModel.movie?.observe(this as Fragment, Observer {
             when (it) {
                 is Resources.Progress -> {
                     //do something
@@ -95,15 +96,11 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
     }
 
     private fun doObserveClickedMovie() {
-        mainViewModel.apply {
-            activity?.let {
-                openMovieEvent.observe(it, Observer<Event<Int>> { event ->
-                    event.getContentIfNotHandled()?.let {
-                        openMovieDetails(it)
-                    }
-                })
+        homeViewModel.openMovieEvent.observe(this, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                openMovieDetails(it)
             }
-        }
+        })
     }
 
     companion object {

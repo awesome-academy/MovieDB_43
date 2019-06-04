@@ -8,9 +8,6 @@ import com.bumptech.glide.request.RequestOptions
 
 @BindingAdapter("imageUrl")
 fun ImageView.setImage(url: String?) {
-    if (url == null || url.isEmpty()) {
-        this.setImageResource(R.drawable.ic_loading)
-    }
     val requestOptions = RequestOptions().apply {
         placeholder(R.drawable.ic_loading)
         error(R.drawable.ic_loading)

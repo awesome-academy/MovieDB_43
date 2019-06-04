@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="genre"
+                  type="com.asterisk.tuandao.themoviedb.data.source.model.Genre"/>
+        <variable name="genreViewModel" type="com.asterisk.tuandao.themoviedb.ui.genre.GenreViewModel"/>
+    </data>
+    <androidx.cardview.widget.CardView
+            android:id="@+id/cardGenre"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:onClick="@{() -> genreViewModel.openGenreMovie(genre.id)}"
+            card_view:cardBackgroundColor="@color/color_primary"
+            card_view:cardCornerRadius="12dp">
+        <TextView
+                android:id="@+id/textGenreTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_20"
+                android:layout_gravity="center"
+                android:text="@{genre.name}"
+                tools:text="@string/fake_text_movie_title"/>
+    </androidx.cardview.widget.CardView>
+</layout>
