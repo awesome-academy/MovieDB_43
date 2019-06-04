@@ -1,4 +1,4 @@
-package com.asterisk.tuandao.themoviedb.ui.home
+package com.asterisk.tuandao.themoviedb.ui.main
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -12,15 +12,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor
-    (
+class MainViewModel @Inject constructor(
     application: Application,
     val moviesRepository: MoviesRepository
 ) : BaseViewModel(application) {
+    private val _selectedGenre = MutableLiveData<Event<String>>()
+    val selectedGenre: LiveData<Event<String>>
+        get() = _selectedGenre
+
 
     init {
         getMovies()
     }
+
     private val _movies = MutableLiveData<Resources<MovieResponse>>()
     val movie: LiveData<Resources<MovieResponse>>
         get() = _movies
@@ -42,6 +46,26 @@ class HomeViewModel @Inject constructor
                     }
                 )
         )
+    }
+
+    fun getGenreMovies(genreId: String) {
+        compositeDisposable.add(
+            moviesRepository.getMoviesByGenre(DEFAULT_PAGE, genreId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        _movies.value = Resources.success(it)
+                    },
+                    {
+                        _movies.value = Resources.failure(it)
+                    }
+                )
+        )
+    }
+
+    fun openGenreMovie(genreId: String) {
+        _selectedGenre.value = Event(genreId)
     }
 
     fun openDetailMovie(movieId: Int) {

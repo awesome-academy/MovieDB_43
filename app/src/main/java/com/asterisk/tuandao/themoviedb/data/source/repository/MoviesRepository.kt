@@ -10,7 +10,9 @@ import javax.inject.Singleton
 class MoviesRepository @Inject constructor(val moviesRemoteDataSource: MoviesDataSource.Remote)
     : MoviesDataSource.Local, MoviesDataSource.Remote{
 
-    override fun getMovies(page: Int) : Single<MovieResponse> {
-        return moviesRemoteDataSource.getMovies(page)
-    }
+    override fun getMovies(page: Int) = moviesRemoteDataSource.getMovies(page)
+
+    override fun getGenreList() = moviesRemoteDataSource.getGenreList()
+
+    override fun getMoviesByGenre(page: Int, genreId: String) = moviesRemoteDataSource.getMoviesByGenre(page, genreId)
 }

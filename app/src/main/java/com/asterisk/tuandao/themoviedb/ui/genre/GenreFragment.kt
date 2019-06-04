@@ -5,19 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.asterisk.tuandao.themoviedb.R
+import com.asterisk.tuandao.themoviedb.databinding.FragmentGenreBinding
 import com.asterisk.tuandao.themoviedb.ui.base.BaseFragment
-import com.asterisk.tuandao.themoviedb.util.MovieViewModelFactory
-import javax.inject.Inject
 
-class GenreFragment : BaseFragment(){
+class GenreFragment : BaseFragment() {
     override val layoutId: Int
         get() = R.layout.fragment_genre
-
-    @Inject
-    lateinit var viewModelFactory: MovieViewModelFactory
+    private lateinit var viewDataBinding: FragmentGenreBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        viewDataBinding = FragmentGenreBinding.inflate(inflater, container, false)
+        return viewDataBinding.root
     }
 
     override fun initComponents() {

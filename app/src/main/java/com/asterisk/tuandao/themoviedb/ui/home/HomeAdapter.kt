@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.databinding.ItemHomeMovieBinding
+import com.asterisk.tuandao.themoviedb.ui.main.MainViewModel
 
-class HomeAdapter(private var movies: List<Movie>, private val viewModel: HomeViewModel) :
+class HomeAdapter(private var movies: List<Movie>, private val viewModel: MainViewModel) :
     RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         return HomeViewHolder(
@@ -22,7 +23,7 @@ class HomeAdapter(private var movies: List<Movie>, private val viewModel: HomeVi
     override fun getItemCount() = movies.size
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
-        val movie = movies.get(position)
+        val movie = movies[position]
         holder.bindView(movie, viewModel)
     }
 
@@ -33,10 +34,10 @@ class HomeAdapter(private var movies: List<Movie>, private val viewModel: HomeVi
 
     class HomeViewHolder(val binding: ItemHomeMovieBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bindView(data: Movie?, homeViewModel: HomeViewModel) {
+        fun bindView(data: Movie?, mainViewModel: MainViewModel) {
             binding.run {
                 movie = data
-                viewmodel = homeViewModel
+//              viewmodel = mainViewModel
             }
         }
     }

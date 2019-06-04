@@ -21,10 +21,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private val fragmentManager = supportFragmentManager
     private val container = R.id.frameContainer
 
-    private lateinit var homeViewModel: HomeViewModel
-    @Inject
-    lateinit var viewModelFactory: MovieViewModelFactory
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val actionBar = supportActionBar

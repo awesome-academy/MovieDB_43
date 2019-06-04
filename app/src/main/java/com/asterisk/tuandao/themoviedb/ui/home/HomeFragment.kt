@@ -14,6 +14,7 @@ import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.databinding.FragmentHomeBinding
 import com.asterisk.tuandao.themoviedb.ui.base.BaseFragment
+import com.asterisk.tuandao.themoviedb.ui.main.MainViewModel
 import com.asterisk.tuandao.themoviedb.util.Event
 import com.asterisk.tuandao.themoviedb.util.showMessage
 import javax.inject.Inject
@@ -27,18 +28,18 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
     private lateinit var viewDataBinding: FragmentHomeBinding
     var itemDecoration: RecyclerView.ItemDecoration? = null
     @Inject
-    lateinit var homeViewModel: HomeViewModel
+    lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewDataBinding = FragmentHomeBinding.inflate(inflater, container, false).apply {
-            viewmodel = homeViewModel
+            viewmodel = mainViewModel
         }
         initAdapter()
         return viewDataBinding.root
     }
 
     private fun initAdapter() {
-        viewDataBinding.viewmodel?.let {
+        mainViewModel.let {
             homeAdapter = HomeAdapter(ArrayList(), it)
         }
         with(viewDataBinding) {
@@ -58,8 +59,8 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
     }
 
     private fun doObserve() {
-        viewDataBinding.viewmodel?.getMovies()
-        viewDataBinding.viewmodel?.movie?.observe(this as Fragment, Observer {
+//        viewDataBinding.viewmodel?.getMovies()
+        mainViewModel.movie?.observe(this as Fragment, Observer {
             when (it) {
                 is Resources.Progress -> {
                     //do something
@@ -94,7 +95,7 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
     }
 
     private fun doObserveClickedMovie() {
-        homeViewModel = homeViewModel.apply {
+        mainViewModel.apply {
             activity?.let {
                 openMovieEvent.observe(it, Observer<Event<Int>> { event ->
                     event.getContentIfNotHandled()?.let {

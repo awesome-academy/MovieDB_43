@@ -6,7 +6,7 @@
         <variable name="movie"
                   type="com.asterisk.tuandao.themoviedb.data.source.model.Movie"/>
         <variable name="viewmodel"
-                  type="com.asterisk.tuandao.themoviedb.ui.home.HomeViewModel"/>
+                  type="com.asterisk.tuandao.themoviedb.ui.main.MainViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
