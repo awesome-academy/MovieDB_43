@@ -8,39 +8,28 @@ import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.data.source.repository.MoviesRepository
 import com.asterisk.tuandao.themoviedb.ui.base.BaseViewModel
 import com.asterisk.tuandao.themoviedb.util.Event
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.asterisk.tuandao.themoviedb.util.handleData
 import javax.inject.Inject
 
 class GenreViewModel @Inject constructor(
     application: Application,
     val moviesRepository: MoviesRepository
 ) : BaseViewModel(application) {
-    private val _genres = MutableLiveData<Resources<GenreResponse>>()
+
+    private val _genres : MutableLiveData<Resources<GenreResponse>> by lazy {
+        MutableLiveData<Resources<GenreResponse>>().also {
+            getGenres(it)
+        }
+    }
     val genres: LiveData<Resources<GenreResponse>>
         get() = _genres
     private val _selectedGenre = MutableLiveData<Event<String>>()
     val selectedGenre: LiveData<Event<String>>
         get() = _selectedGenre
 
-    init {
-        //some bug with thread, have not performed yet
-        getGenreList()
-    }
-
-    fun getGenreList() {
+    fun getGenres(mutableLiveData: MutableLiveData<Resources<GenreResponse>>) {
         compositeDisposable.add(
-            moviesRepository.getGenreList()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        _genres.value = Resources.success(it)
-                    },
-                    {
-                        _genres.value = Resources.failure(it)
-                    }
-                )
+            moviesRepository.getGenreList().handleData(mutableLiveData)
         )
     }
 

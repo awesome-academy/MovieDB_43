@@ -54,4 +54,3 @@
             tools:text="@string/fake_text_imdb_score" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
-

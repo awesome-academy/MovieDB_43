@@ -7,4 +7,6 @@ object Constants {
     const val IMAGE_LINK = "https://image.tmdb.org/t/p/w"
     const val SLASH = "/"
     const val IMAGE_SIZE_200 = 1280
+    const val SPAN_COUNT = 2
+    const val GENRE_ID_TAG = "genre_id"
 }

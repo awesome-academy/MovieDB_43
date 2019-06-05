@@ -1,6 +1,7 @@
 package com.asterisk.tuandao.themoviedb.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.databinding.FragmentHomeBinding
 import com.asterisk.tuandao.themoviedb.ui.base.BaseFragment
-import com.asterisk.tuandao.themoviedb.ui.main.MainViewModel
+import com.asterisk.tuandao.themoviedb.util.Constants
 import com.asterisk.tuandao.themoviedb.util.showMessage
 import javax.inject.Inject
 
@@ -26,8 +27,6 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var viewDataBinding: FragmentHomeBinding
     var itemDecoration: RecyclerView.ItemDecoration? = null
-    @Inject
-    lateinit var mainViewModel: MainViewModel
     @Inject
     lateinit var homeViewModel: HomeViewModel
 
@@ -43,7 +42,7 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
 
         homeAdapter = HomeAdapter(ArrayList(), homeViewModel)
         with(viewDataBinding) {
-            recyclerMovie.layoutManager = GridLayoutManager(activity, SPAN_COUNT)
+            recyclerMovie.layoutManager = GridLayoutManager(activity, Constants.SPAN_COUNT)
             recyclerMovie.setHasFixedSize(true)
             recyclerMovie.addItemDecoration(DividerItemDecoration(activity, 0))
             recyclerMovie.adapter = homeAdapter
@@ -56,7 +55,7 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
     }
 
     override fun openMovieDetails(movieId: Int) {
-        //open details movie
+
     }
 
     private fun doObserve() {
@@ -65,6 +64,7 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
             when (it) {
                 is Resources.Progress -> {
                     //do something
+                    Log.d("HomeFragment"," Progress")
                 }
                 is Resources.Success -> {
                     showSuccess(it.data?.results)
@@ -105,6 +105,5 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
 
     companion object {
         fun newInstance() = HomeFragment()
-        const val SPAN_COUNT = 2
     }
 }

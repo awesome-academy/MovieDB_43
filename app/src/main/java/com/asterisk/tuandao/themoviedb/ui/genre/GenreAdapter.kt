@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.data.source.model.Genre
-import com.asterisk.tuandao.themoviedb.databinding.ItemGenreMovieBinding
+import com.asterisk.tuandao.themoviedb.databinding.ItemGenreBinding
 
 class GenreAdapter(private var genres: List<Genre>, private val genreViewModel: GenreViewModel) :
     RecyclerView.Adapter<GenreAdapter.GenreViewHolder>() {
@@ -15,7 +15,7 @@ class GenreAdapter(private var genres: List<Genre>, private val genreViewModel: 
         return GenreViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
-                R.layout.item_genre_movie, parent, false
+                R.layout.item_genre, parent, false
             )
         )
     }
@@ -32,7 +32,7 @@ class GenreAdapter(private var genres: List<Genre>, private val genreViewModel: 
         notifyDataSetChanged()
     }
 
-    class GenreViewHolder(val binding: ItemGenreMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+    class GenreViewHolder(val binding: ItemGenreBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(data: Genre?, genreViewModel: GenreViewModel) {
             binding.run {

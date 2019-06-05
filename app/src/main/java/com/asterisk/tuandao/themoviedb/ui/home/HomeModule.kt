@@ -9,10 +9,10 @@ import javax.inject.Scope
 
 @Module
 class HomeModule {
-//    @HomeFragmentScope
-//    @Provides
-//    fun provideViewModel(homeFragment: HomeFragment, viewModelFactory: MovieViewModelFactory) =
-//        ViewModelProviders.of(homeFragment, viewModelFactory).get(HomeViewModel::class.java)
+    @HomeFragmentScope
+    @Provides
+    fun provideViewModel(homeFragment: HomeFragment, viewModelFactory: MovieViewModelFactory) =
+        ViewModelProviders.of(homeFragment, viewModelFactory).get(HomeViewModel::class.java)
 }
 
 @Scope

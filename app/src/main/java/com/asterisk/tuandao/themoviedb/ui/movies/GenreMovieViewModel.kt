@@ -1,4 +1,4 @@
-package com.asterisk.tuandao.themoviedb.ui.home
+package com.asterisk.tuandao.themoviedb.ui.movies
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -7,36 +7,35 @@ import com.asterisk.tuandao.themoviedb.data.source.model.respone.MovieResponse
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.data.source.repository.MoviesRepository
 import com.asterisk.tuandao.themoviedb.ui.base.BaseViewModel
+import com.asterisk.tuandao.themoviedb.ui.home.HomeViewModel
 import com.asterisk.tuandao.themoviedb.util.Event
 import com.asterisk.tuandao.themoviedb.util.handleData
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor
-    (
+class GenreMovieViewModel @Inject constructor(
     application: Application,
-    val moviesRepository: MoviesRepository
-) : BaseViewModel(application) {
+    val moviesRepository: MoviesRepository) : BaseViewModel(application){
 
-//    init {
-//        getMovies()
-//    }
-    private val _movies: MutableLiveData<Resources<MovieResponse>> by lazy {
-        MutableLiveData<Resources<MovieResponse>>().also {
-            getMovies(it)
-        }
-    }
+    private val _movies = MutableLiveData<Resources<MovieResponse>>()
     val movie: LiveData<Resources<MovieResponse>>
         get() = _movies
+    private val _selectedGenre = MutableLiveData<String>()
+    val selectedGenre: LiveData<String>
+        get() = _selectedGenre
     private val _openMovieEvent = MutableLiveData<Event<Int>>()
     val openMovieEvent: LiveData<Event<Int>>
         get() = _openMovieEvent
 
-    fun getMovies(mutableLiveData: MutableLiveData<Resources<MovieResponse>>) {
+
+    //bug rotate activity, have not perform yet
+    fun getMoviesByGenre(genreId: String) {
         compositeDisposable.add(
-            moviesRepository.getMovies(DEFAULT_PAGE).handleData(mutableLiveData)
+           moviesRepository.getMoviesByGenre(DEFAULT_PAGE, genreId).handleData(_movies)
         )
+    }
+
+    fun setSelectedGenre(genreId: String) {
+        _selectedGenre.value = genreId
     }
 
     fun openDetailMovie(movieId: Int) {
