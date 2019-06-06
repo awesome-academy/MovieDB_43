@@ -8,15 +8,17 @@ import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.databinding.ItemGenreMovieBinding
 
-class GenreMovieAdapter(private var movies: List<Movie>, val genreMovieViewModel: GenreMovieViewModel) :
-    RecyclerView.Adapter<GenreMovieAdapter.GenreMovieViewHolder>() {
+class GenreMovieAdapter(
+    private var movies: List<Movie>,
+    val genreMovieViewModel: GenreMovieViewModel
+) : RecyclerView.Adapter<GenreMovieAdapter.GenreMovieViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreMovieAdapter.GenreMovieViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreMovieViewHolder {
         return GenreMovieViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.item_genre_movie, parent, false
-            )
+            ), genreMovieViewModel
         )
     }
 
@@ -24,7 +26,7 @@ class GenreMovieAdapter(private var movies: List<Movie>, val genreMovieViewModel
 
     override fun onBindViewHolder(holder: GenreMovieViewHolder, position: Int) {
         val movie = movies[position]
-        holder.bindView(movie, genreMovieViewModel)
+        holder.bindView(movie)
     }
 
     fun swapAdapter(newMovies: List<Movie>) {
@@ -32,12 +34,17 @@ class GenreMovieAdapter(private var movies: List<Movie>, val genreMovieViewModel
         notifyDataSetChanged()
     }
 
-    class GenreMovieViewHolder(val binding: ItemGenreMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+    class GenreMovieViewHolder(
+        val binding: ItemGenreMovieBinding
+        , genreMovieViewModel: GenreMovieViewModel
+    ) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.viewmodel = genreMovieViewModel
+        }
 
-        fun bindView(data: Movie?, genreMovieViewModel: GenreMovieViewModel) {
+        fun bindView(data: Movie?) {
             binding.run {
                 movie = data
-                viewmodel = genreMovieViewModel
             }
         }
     }

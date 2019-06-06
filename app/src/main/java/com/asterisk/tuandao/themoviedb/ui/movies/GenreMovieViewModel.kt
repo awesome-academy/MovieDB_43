@@ -7,7 +7,6 @@ import com.asterisk.tuandao.themoviedb.data.source.model.respone.MovieResponse
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.data.source.repository.MoviesRepository
 import com.asterisk.tuandao.themoviedb.ui.base.BaseViewModel
-import com.asterisk.tuandao.themoviedb.ui.home.HomeViewModel
 import com.asterisk.tuandao.themoviedb.util.Event
 import com.asterisk.tuandao.themoviedb.util.handleData
 import javax.inject.Inject

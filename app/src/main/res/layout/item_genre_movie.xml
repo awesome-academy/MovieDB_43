@@ -41,7 +41,7 @@
                 app:layout_constraintEnd_toEndOf="@id/imageMovie"
                 app:layout_constraintStart_toStartOf="@+id/imageMovie"
                 app:layout_constraintTop_toBottomOf="@id/imageMovie"
-                tools:text="@string/fake_text_movie_title"/>
+                tools:text="@string/title_fake_text_movie"/>
 
         <TextView
                 android:id="@+id/textScore"
@@ -51,6 +51,6 @@
                 android:text="@{String.valueOf(movie.voteAverage)}"
                 app:layout_constraintStart_toStartOf="@id/textMovieTitle"
                 app:layout_constraintTop_toBottomOf="@id/textMovieTitle"
-                tools:text="@string/fake_text_imdb_score"/>
+                tools:text="@string/title_text_imdb_score"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

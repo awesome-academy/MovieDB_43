@@ -1,7 +1,5 @@
 package com.asterisk.tuandao.themoviedb.ui.genre
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +13,6 @@ import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.databinding.FragmentGenreBinding
 import com.asterisk.tuandao.themoviedb.ui.base.BaseFragment
 import com.asterisk.tuandao.themoviedb.ui.movies.GenreMovieActivity
-import com.asterisk.tuandao.themoviedb.util.Constants
 import com.asterisk.tuandao.themoviedb.util.showMessage
 import javax.inject.Inject
 

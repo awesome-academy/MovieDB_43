@@ -13,6 +13,7 @@
     <dimen name="sp_10">10sp</dimen>
     <dimen name="dp_8">8dp</dimen>
     <dimen name="sp_20">20sp</dimen>
+    <dimen name="default_stroke">1dp</dimen>
     <dimen name="dp_50">50dp</dimen>
     <dimen name="dp_300">300dp</dimen>
     <dimen name="dp_12">12dp</dimen>

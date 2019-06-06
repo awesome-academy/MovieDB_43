@@ -1,6 +1,7 @@
 package com.asterisk.tuandao.themoviedb.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +55,7 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
     }
 
     override fun openMovieDetails(movieId: Int) {
-        //open details movie
+        //open movie detail
     }
 
     private fun doObserve() {

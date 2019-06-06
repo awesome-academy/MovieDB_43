@@ -28,9 +28,9 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         val homeFragment = HomeFragment.newInstance() as Fragment
         navigation.setOnNavigationItemSelectedListener(this)
         supportFragmentManager.switch(
-            container,
-            homeFragment,
-            MOVIES_FRAGMENT_TAG
+                container,
+                homeFragment,
+                MOVIES_FRAGMENT_TAG
         )
     }
 
@@ -39,18 +39,18 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             R.id.navigation_movies -> {
                 val homeFragment = HomeFragment.newInstance() as Fragment
                 supportFragmentManager.switch(
-                    container,
-                    homeFragment,
-                    MOVIES_FRAGMENT_TAG
+                        container,
+                        homeFragment,
+                        MOVIES_FRAGMENT_TAG
                 )
                 return true
             }
             R.id.navigation_genres -> {
                 val genreFragment = GenreFragment.newInstance() as Fragment
                 supportFragmentManager.switch(
-                    container,
-                    genreFragment,
-                    GENRES_FRAGMENT_TAG
+                        container,
+                        genreFragment,
+                        GENRES_FRAGMENT_TAG
                 )
                 return true
             }
