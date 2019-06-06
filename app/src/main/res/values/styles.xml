@@ -11,17 +11,17 @@
         <item name="android:textSize">@dimen/sp_20</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
-    <style name="textMovieTitle">
+    <style name="TextMovieTitle">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/sp_12</item>
     </style>
 
-    <style name="textScoreIDMB">
+    <style name="TextScoreIDMB">
         <item name="android:textColor">@color/color_silver_score_imdb</item>
         <item name="android:textSize">@dimen/sp_10</item>
     </style>
 
-    <style name="textTitleDetail">
+    <style name="TextTitleDetail">
         <item name="android:textColor">@color/color_silver_score_imdb</item>
         <item name="android:textSize">@dimen/sp_20</item>
     </style>

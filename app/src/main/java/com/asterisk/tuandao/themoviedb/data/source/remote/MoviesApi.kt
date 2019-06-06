@@ -14,7 +14,7 @@ interface MoviesApi {
     fun getPopularMovies(@Query("page") page: Int): Single<MovieResponse>
 
     @GET("3/genre/movie/list")
-    fun getGenres(): Single<GenreResponse>
+    fun getGenresList(): Single<GenreResponse>
 
     @GET("/3/discover/movie")
     fun getMoviesByGenre(

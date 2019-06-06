@@ -13,7 +13,7 @@ interface MoviesDataSource {
 
     interface Remote {
         fun getMovies(page: Int): Single<MovieResponse>
-        fun getGenres(): Single<GenreResponse>
+        fun getGenreList(): Single<GenreResponse>
         fun getMoviesByGenre(page: Int, genreId: String): Single<MovieResponse>
         fun getMoviesById(page: Int, append: String): Single<Movie>
     }
