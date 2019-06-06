@@ -2,6 +2,7 @@ package com.asterisk.tuandao.themoviedb.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.asterisk.tuandao.themoviedb.ui.detail.DetailViewModel
 import com.asterisk.tuandao.themoviedb.ui.genre.GenreViewModel
 import com.asterisk.tuandao.themoviedb.ui.home.HomeViewModel
 import com.asterisk.tuandao.themoviedb.ui.main.MainViewModel
@@ -23,6 +24,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(GenreViewModel::class)
     abstract fun bindGenreViewModel(genreViewModel: GenreViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailViewModel::class)
+    abstract fun bindDetailViewModel(detailViewModel: DetailViewModel): ViewModel
 
     @Binds
     @IntoMap

@@ -7,4 +7,6 @@
     <color name="color_back_ground_home">#47535E</color>
     <color name="color_blue_icon">#157EFB</color>
     <color name="color_bold_silver">#343F4B</color>
+    <color name="color_text_release">#969FAA</color>
+    <color name="color_text_actor">#B3BDC8</color>
 </resources>

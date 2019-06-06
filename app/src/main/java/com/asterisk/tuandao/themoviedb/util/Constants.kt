@@ -9,4 +9,5 @@ object Constants {
     const val IMAGE_SIZE_200 = 1280
     const val SPAN_COUNT = 2
     const val GENRE_ID_TAG = "genre_id"
+    const val DEFAULT_PAGE = 1
 }

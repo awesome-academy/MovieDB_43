@@ -7,4 +7,14 @@
     <string name="fake_text_movie_title">Avenger Endgame Infinity war</string>
     <string name="fake_text_imdb_score">8.7</string>
     <string name="default_text_category">Popular Movie</string>
+    <string name="default_release_day">January 29,2013</string>
+    <string name="fake_text_score_detail">7.2/10</string>
+    <string name="favorite_button">Favorite</string>
+    <string name="text_overview_detail">Overview</string>
+    <string name="full_casts_and_craw">Full casts and craw</string>
+    <string name="text_review_title">Reviewer</string>
+    <string name="fake_text_actor_name">Chris Herme</string>
+    <string name="fake_text_character">Thor</string>
+    <string name="minumun_text_line">1</string>
+    <string name="maxiumn_text_line">4</string>
 </resources>

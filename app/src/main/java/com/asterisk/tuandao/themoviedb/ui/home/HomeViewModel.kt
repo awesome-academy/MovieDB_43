@@ -19,9 +19,6 @@ class HomeViewModel @Inject constructor
     val moviesRepository: MoviesRepository
 ) : BaseViewModel(application) {
 
-//    init {
-//        getMovies()
-//    }
     private val _movies: MutableLiveData<Resources<MovieResponse>> by lazy {
         MutableLiveData<Resources<MovieResponse>>().also {
             getMovies(it)
