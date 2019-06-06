@@ -30,7 +30,7 @@
                 tools:background="@color/color_primary"/>
         <TextView
             android:id="@+id/textMovieTitle"
-            style="@style/TextMovieTitle"
+            style="@style/textMovieTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
@@ -44,7 +44,7 @@
 
         <TextView
             android:id="@+id/textScore"
-            style="@style/TextScoreIDMB"
+            style="@style/textScoreIDMB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{String.valueOf(movie.voteAverage)}"

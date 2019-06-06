@@ -3,22 +3,25 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimary">@color/color_bold_silver</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
     </style>
-
-    <style name="TextMovieTitle">
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/sp_20</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="textMovieTitle">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/sp_12</item>
     </style>
 
-    <style name="TextScoreIDMB">
+    <style name="textScoreIDMB">
         <item name="android:textColor">@color/color_silver_score_imdb</item>
         <item name="android:textSize">@dimen/sp_10</item>
     </style>
 
-    <style name="TextTitleDetail">
+    <style name="textTitleDetail">
         <item name="android:textColor">@color/color_silver_score_imdb</item>
         <item name="android:textSize">@dimen/sp_20</item>
     </style>
