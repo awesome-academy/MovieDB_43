@@ -22,7 +22,7 @@ interface MoviesApi {
             , @Query("with_genres") genreId: String
     ): Single<MovieResponse>
 
-    @GET("/3/discover/movie")
+    @GET("/3/movie/{id}")
     fun getMoviesById(@Path("id") movieId: Int,
                       @Query("append_to_response") append: String): Single<Movie>
 }

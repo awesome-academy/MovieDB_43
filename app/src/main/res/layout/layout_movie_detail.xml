@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-
+    <data>
+        <variable
+            name="viewModel"
+            type="com.asterisk.tuandao.themoviedb.ui.detail.DetailViewModel" />
+    </data>
     <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -18,6 +22,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/dp_16"
                 android:scaleType="fitXY"
+                app:imageUrl="@{viewModel.movieRenderView.posterPath}"
                 app:layout_constraintDimensionRatio="3:4"
                 app:layout_constraintStart_toStartOf="@+id/guidelineBegin"
                 app:layout_constraintTop_toTopOf="parent"
@@ -29,14 +34,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:text="@string/fake_text_movie_title"
+                android:text="@{viewModel.movieRenderView.title}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@android:color/white"
                 app:layout_constraintBottom_toTopOf="@+id/barrier"
                 app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
                 app:layout_constraintStart_toEndOf="@+id/imageMovie"
                 app:layout_constraintTop_toTopOf="@+id/imageMovie"
-                app:layout_constraintVertical_bias="0.1" />
+                app:layout_constraintVertical_bias="0.1"
+                tools:text="@string/fake_text_movie_title"/>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guidelineBegin"
@@ -69,6 +75,7 @@
                 android:layout_marginTop="16dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/color_text_release"
+                android:text="@{viewModel.movieRenderView.releaseDate}"
                 app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
                 app:layout_constraintStart_toEndOf="@+id/imageMovie"
                 app:layout_constraintTop_toBottomOf="@+id/textTitleMovie"
@@ -83,6 +90,7 @@
                 android:layout_marginTop="@dimen/dp_16"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@android:color/white"
+                android:text="@{String.valueOf(viewModel.movieRenderView.voteAverage)}"
                 app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
                 app:layout_constraintStart_toEndOf="@+id/imageMovie"
                 app:layout_constraintTop_toBottomOf="@+id/textRelease"
@@ -132,7 +140,8 @@
                     android:layout_marginTop="@dimen/dp_8"
                     android:layout_marginRight="@dimen/dp_16"
                     android:paddingBottom="@dimen/dp_16"
-                    android:text="@string/fake_text_movie_title"
+                    android:text="@{viewModel.movieRenderView.overview}"
+                    tools:text="@string/fake_text_movie_title"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     android:textColor="@android:color/white"
                     app:layout_constraintTop_toBottomOf="@id/textOverview" />

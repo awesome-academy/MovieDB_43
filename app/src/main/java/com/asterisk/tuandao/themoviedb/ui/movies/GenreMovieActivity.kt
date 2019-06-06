@@ -12,6 +12,7 @@ import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.databinding.ActivityGenreMovieBinding
+import com.asterisk.tuandao.themoviedb.ui.detail.DetailActivity
 import com.asterisk.tuandao.themoviedb.util.Constants
 import com.asterisk.tuandao.themoviedb.util.showMessage
 import dagger.android.support.DaggerAppCompatActivity
@@ -40,7 +41,7 @@ class GenreMovieActivity : DaggerAppCompatActivity(), GenreMovieNavigator {
     }
 
     override fun openMovieDetails(movieId: Int) {
-        Log.d("GenreMovieActivity", "movieId $movieId")
+        DetailActivity.getIntent(this, movieId)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

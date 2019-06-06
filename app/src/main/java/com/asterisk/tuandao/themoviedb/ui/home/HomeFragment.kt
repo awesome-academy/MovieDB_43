@@ -1,5 +1,6 @@
 package com.asterisk.tuandao.themoviedb.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.databinding.FragmentHomeBinding
 import com.asterisk.tuandao.themoviedb.ui.base.BaseFragment
+import com.asterisk.tuandao.themoviedb.ui.detail.DetailActivity
 import com.asterisk.tuandao.themoviedb.util.Constants
 import com.asterisk.tuandao.themoviedb.util.showMessage
 import javax.inject.Inject
@@ -39,7 +41,6 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
     }
 
     private fun initAdapter() {
-
         homeAdapter = HomeAdapter(ArrayList(), homeViewModel)
         with(viewDataBinding) {
             recyclerMovie.layoutManager = GridLayoutManager(activity, Constants.SPAN_COUNT)
@@ -55,16 +56,16 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
     }
 
     override fun openMovieDetails(movieId: Int) {
-
+        DetailActivity.getIntent(activity as Context, movieId).apply {
+            startActivity(this)
+        }
     }
 
     private fun doObserve() {
-//        viewDataBinding.viewmodel?.getMovies()
         homeViewModel.movie?.observe(this as Fragment, Observer {
             when (it) {
                 is Resources.Progress -> {
                     //do something
-                    Log.d("HomeFragment"," Progress")
                 }
                 is Resources.Success -> {
                     showSuccess(it.data?.results)

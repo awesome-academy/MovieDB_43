@@ -16,6 +16,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "API_KEY", "\"${API_KEY}\""
+        buildConfigField "String", "YOUTUBE_API_KEY", "\"${YOUTUBE_API_KEY}\""
     }
     buildTypes {
         release {
@@ -65,4 +66,6 @@ dependencies {
     //glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
+
 }

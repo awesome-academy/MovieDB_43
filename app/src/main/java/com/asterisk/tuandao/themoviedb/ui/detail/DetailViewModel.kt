@@ -16,18 +16,25 @@ class DetailViewModel
     private val _movie = MutableLiveData<Resources<Movie>>()
     val movie: LiveData<Resources<Movie>>
         get() = _movie
+    private val _movieRenderView = MutableLiveData<Movie>()
+    val movieRenderView: LiveData<Movie>
+        get() = _movieRenderView
     private val _selectedMovie = MutableLiveData<Int>()
     val selectedMovie: LiveData<Int>
         get() = _selectedMovie
+
+    fun getMoviesByMovie(movieId: Int) {
+        compositeDisposable.add(
+                moviesRepository.getMoviesById(movieId, APPEND_TO_MOVIE_DETAIL).handleData(_movie)
+        )
+    }
 
     fun setSelectedMovie(movieId: Int) {
         _selectedMovie.value = movieId
     }
 
-    fun getMoviesByGenre(movieId: Int) {
-        compositeDisposable.add(
-                moviesRepository.getMoviesById(movieId, APPEND_TO_MOVIE_DETAIL).handleData(_movie)
-        )
+    fun setMovieRenderView(movie: Movie) {
+       _movieRenderView.value = movie
     }
 
     companion object {

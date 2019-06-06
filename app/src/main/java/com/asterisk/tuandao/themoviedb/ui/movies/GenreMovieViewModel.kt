@@ -26,7 +26,6 @@ class GenreMovieViewModel @Inject constructor(
     val openMovieEvent: LiveData<Event<Int>>
         get() = _openMovieEvent
 
-
     //bug rotate activity, have not perform yet
     fun getMoviesByGenre(genreId: String) {
         compositeDisposable.add(
