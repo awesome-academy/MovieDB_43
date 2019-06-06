@@ -5,14 +5,11 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.ui.base.BaseActivity
+import com.asterisk.tuandao.themoviedb.ui.genre.GenreFragment
 import com.asterisk.tuandao.themoviedb.ui.home.HomeFragment
-import com.asterisk.tuandao.themoviedb.ui.home.HomeViewModel
-import com.asterisk.tuandao.themoviedb.util.MovieViewModelFactory
 import com.asterisk.tuandao.themoviedb.util.switch
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
-
 
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -49,7 +46,13 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 return true
             }
             R.id.navigation_genres -> {
-                //do something
+                val genreFragment = GenreFragment.newInstance() as Fragment
+                supportFragmentManager.switch(
+                    container,
+                    genreFragment,
+                    GENRES_FRAGMENT_TAG
+                )
+                return true
             }
             R.id.navigation_favorite -> {
                 //do something
@@ -60,5 +63,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     companion object {
         const val MOVIES_FRAGMENT_TAG = "movies_fragment"
+        const val GENRES_FRAGMENT_TAG = "genres_fragment"
     }
 }

@@ -1,7 +1,6 @@
 package com.asterisk.tuandao.themoviedb.data.source.remote
 
 import com.asterisk.tuandao.themoviedb.data.source.MoviesDataSource
-import com.asterisk.tuandao.themoviedb.data.source.model.respone.GenreResponse
 import com.asterisk.tuandao.themoviedb.data.source.model.respone.MovieResponse
 import io.reactivex.Single
 import javax.inject.Inject
