@@ -54,7 +54,7 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
     }
 
     override fun openMovieDetails(movieId: Int) {
-        //open movie detail
+
     }
 
     private fun doObserve() {
