@@ -1,7 +1,6 @@
 package com.asterisk.tuandao.themoviedb.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,20 +54,13 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
     }
 
     override fun openMovieDetails(movieId: Int) {
-<<<<<<< 23214506742c7864b7ebd828b66a5e90d24a627b
         //open movie detail
-=======
-
->>>>>>> 13077 create ui detail screen
     }
 
     private fun doObserve() {
-//        viewDataBinding.viewmodel?.getMovies()
         homeViewModel.movie?.observe(this as Fragment, Observer {
             when (it) {
                 is Resources.Progress -> {
-                    //do something
-                    Log.d("HomeFragment"," Progress")
                 }
                 is Resources.Success -> {
                     showSuccess(it.data?.results)
