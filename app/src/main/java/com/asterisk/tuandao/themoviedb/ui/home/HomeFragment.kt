@@ -1,7 +1,6 @@
 package com.asterisk.tuandao.themoviedb.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,7 +61,6 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
         homeViewModel.movie?.observe(this as Fragment, Observer {
             when (it) {
                 is Resources.Progress -> {
-                    //do something
                 }
                 is Resources.Success -> {
                     showSuccess(it.data?.results)

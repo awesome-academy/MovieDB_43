@@ -7,9 +7,12 @@ import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.ui.base.BaseActivity
 import com.asterisk.tuandao.themoviedb.ui.genre.GenreFragment
 import com.asterisk.tuandao.themoviedb.ui.home.HomeFragment
+import com.asterisk.tuandao.themoviedb.ui.home.HomeViewModel
+import com.asterisk.tuandao.themoviedb.util.MovieViewModelFactory
 import com.asterisk.tuandao.themoviedb.util.switch
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
