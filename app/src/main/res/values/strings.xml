@@ -17,4 +17,7 @@
     <string name="fake_text_character">Thor</string>
     <string name="minumun_text_line">1</string>
     <string name="maxiumn_text_line">4</string>
+    <string name="info_birth">Plate of Birth: Cam Pha Quang Ninh</string>
+    <string name="info_male">Genre: Male</string>
+    <string name="info_born">Born: 25 Sep 1968</string>
 </resources>

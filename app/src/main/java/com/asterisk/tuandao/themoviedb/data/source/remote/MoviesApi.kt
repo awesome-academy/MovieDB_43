@@ -1,6 +1,7 @@
 package com.asterisk.tuandao.themoviedb.data.source.remote
 
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
+import com.asterisk.tuandao.themoviedb.data.source.model.respone.ActorResponse
 import com.asterisk.tuandao.themoviedb.data.source.model.respone.GenreResponse
 import com.asterisk.tuandao.themoviedb.data.source.model.respone.MovieResponse
 import io.reactivex.Single
@@ -25,4 +26,7 @@ interface MoviesApi {
     @GET("/3/movie/{id}")
     fun getMoviesById(@Path("id") movieId: Int,
                       @Query("append_to_response") append: String): Single<Movie>
+    @GET("/3/movie/{person_id}")
+    fun getPersonById(@Path("person_id") personId: Int,
+                      @Query("append_to_response") append: String): Single<ActorResponse>
 }
