@@ -4,7 +4,17 @@
     <string name="title_movies">Movies</string>
     <string name="title_genres">Genres</string>
     <string name="title_favorite">Favorite</string>
-    <string name="fake_text_movie_title">Avenger Endgame Infinity war</string>
-    <string name="fake_text_imdb_score">8.7</string>
+    <string name="title_fake_text_movie">Avenger Endgame Infinity war</string>
+    <string name="title_text_imdb_score">8.7</string>
     <string name="default_text_category">Popular Movie</string>
+    <string name="default_release_day">January 29,2013</string>
+    <string name="title_fake_imdb_score">7.2/10</string>
+    <string name="favorite_button">Favorite</string>
+    <string name="title_overview_detail">Overview</string>
+    <string name="full_casts_and_craw">Full casts and craw</string>
+    <string name="title_review">Reviewer</string>
+    <string name="actor_name_fake_text">Chris Herme</string>
+    <string name="character_fake_text">Thor</string>
+    <string name="minumun_text_line">1</string>
+    <string name="maxiumn_text_line">4</string>
 </resources>

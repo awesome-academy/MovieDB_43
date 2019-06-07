@@ -8,14 +8,16 @@ import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.databinding.ItemHomeMovieBinding
 
-class HomeAdapter(private var movies: List<Movie>, private val homeViewModel: HomeViewModel) :
-    RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+class HomeAdapter(
+    private var movies: List<Movie>,
+    private val viewModel: HomeViewModel
+) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         return HomeViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.item_home_movie, parent, false
-            ), homeViewModel
+            ), viewModel
         )
     }
 
@@ -23,7 +25,7 @@ class HomeAdapter(private var movies: List<Movie>, private val homeViewModel: Ho
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         val movie = movies[position]
-        holder.bindView(movie, homeViewModel)
+        holder.bindView(movie, viewModel)
     }
 
     fun swapAdapter(newMovies: List<Movie>) {
@@ -31,11 +33,14 @@ class HomeAdapter(private var movies: List<Movie>, private val homeViewModel: Ho
         notifyDataSetChanged()
     }
 
-    class HomeViewHolder(val binding: ItemHomeMovieBinding, val homeViewModel: HomeViewModel) : RecyclerView.ViewHolder(binding.root) {
-
+    class HomeViewHolder(
+        val binding: ItemHomeMovieBinding,
+        homeViewModel: HomeViewModel
+    ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.viewmodel = homeViewModel
         }
+
         fun bindView(data: Movie?, homeViewModel: HomeViewModel) {
             binding.run {
                 movie = data

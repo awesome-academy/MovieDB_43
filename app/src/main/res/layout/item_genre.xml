@@ -22,6 +22,6 @@
                 android:textSize="@dimen/sp_20"
                 android:layout_gravity="center"
                 android:text="@{genre.name}"
-                tools:text="@string/fake_text_movie_title"/>
+                tools:text="@string/title_fake_text_movie"/>
     </androidx.cardview.widget.CardView>
 </layout>
