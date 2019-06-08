@@ -1,11 +1,6 @@
 package com.asterisk.tuandao.themoviedb.data.source.remote
 
 import com.asterisk.tuandao.themoviedb.data.source.MoviesDataSource
-import com.asterisk.tuandao.themoviedb.data.source.model.respone.ActorResponse
-import com.asterisk.tuandao.themoviedb.data.source.model.respone.GenreResponse
-import com.asterisk.tuandao.themoviedb.data.source.model.respone.MovieResponse
-import io.reactivex.Observable
-import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,7 +9,7 @@ class MoviesRemoteDataSource @Inject constructor(val movieApi: MoviesApi) : Movi
 
     override fun getMovies(page: Int) = movieApi.getPopularMovies(page)
 
-    override fun getGenreList() = movieApi.getGenresList()
+    override fun getGenres() = movieApi.getGenres()
 
     override fun getMoviesByGenre(page: Int, genreId: String) = movieApi.getMoviesByGenre(page, genreId)
 

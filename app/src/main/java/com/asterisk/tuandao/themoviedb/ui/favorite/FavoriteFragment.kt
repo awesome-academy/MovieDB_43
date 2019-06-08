@@ -56,6 +56,14 @@ class FavoriteFragment : BaseFragment(), FavoriteNavigator{
     }
 
     private fun doObserve() {
+        favoriteViewModel.favorite.observe(this, Observer {
+            it?.let { movies ->
+                favoriteAdapter.swapAdapter(movies)
+            }
+        })
+    }
 
+    companion object {
+        fun newInstance() = FavoriteFragment()
     }
 }

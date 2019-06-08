@@ -29,7 +29,7 @@ class GenreViewModel @Inject constructor(
 
     fun getGenres(mutableLiveData: MutableLiveData<Resources<GenreResponse>>) {
         compositeDisposable.add(
-            moviesRepository.getGenreList().handleData(mutableLiveData)
+            moviesRepository.getGenres().handleData(mutableLiveData)
         )
     }
 

@@ -17,7 +17,7 @@ class FavoriteAdapter(
         return FavoriteViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
-                R.layout.item_list_movie, parent, false
+                R.layout.item_list_favorite, parent, false
             ), favoriteViewModel
         )
     }

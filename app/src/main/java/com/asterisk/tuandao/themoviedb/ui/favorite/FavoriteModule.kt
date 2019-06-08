@@ -1,7 +1,6 @@
 package com.asterisk.tuandao.themoviedb.ui.favorite
 
 import androidx.lifecycle.ViewModelProviders
-import com.asterisk.tuandao.themoviedb.ui.home.HomeFragmentScope
 import com.asterisk.tuandao.themoviedb.util.MovieViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -10,7 +9,7 @@ import javax.inject.Scope
 
 @Module
 class FavoriteModule {
-    @HomeFragmentScope
+    @FavoriteFragmentScope
     @Provides
     fun provideViewModel(favoriteFragment: FavoriteFragment, viewModelFactory: MovieViewModelFactory) =
         ViewModelProviders.of(favoriteFragment, viewModelFactory).get(FavoriteViewModel::class.java)

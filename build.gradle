@@ -36,4 +36,5 @@ ext {
     retrofitVersion = "2.5.0"
     httpLogInterceptor = "3.14.2"
     glideVersion = "4.9.0"
+    roomVersion = "1.1.1"
 }

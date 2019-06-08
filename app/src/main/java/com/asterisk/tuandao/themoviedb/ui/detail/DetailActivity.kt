@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -16,6 +18,8 @@ import com.asterisk.tuandao.themoviedb.databinding.ActivityDetailBinding
 import com.asterisk.tuandao.themoviedb.ui.actor.ActorActivity
 import com.asterisk.tuandao.themoviedb.util.showMessage
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.layout_movie_detail.*
+import kotlinx.android.synthetic.main.layout_movie_detail.view.*
 import javax.inject.Inject
 
 class DetailActivity : DaggerAppCompatActivity(), DetailNavigator{
@@ -65,9 +69,11 @@ class DetailActivity : DaggerAppCompatActivity(), DetailNavigator{
         doObserverClickedActor()
     }
 
+
     private fun doObserve() {
         detailViewModel.selectedMovie.observe(this, Observer {
             detailViewModel.getMoviesByMovie(it)
+            detailViewModel.isFavorite(it)
         })
         detailViewModel.movie?.observe(this, Observer {
             when (it) {
@@ -81,6 +87,10 @@ class DetailActivity : DaggerAppCompatActivity(), DetailNavigator{
                     showError(it.e.message)
                 }
             }
+        })
+        detailViewModel.isFavorite.observe(this, Observer {
+            viewDataBinding.movieDetail.buttonLikeFavorite.visibility = if (it) View.INVISIBLE else View.VISIBLE
+            viewDataBinding.movieDetail.buttonDislikeFavorite.visibility = if (!it) View.GONE else View.VISIBLE
         })
     }
 
@@ -101,6 +111,7 @@ class DetailActivity : DaggerAppCompatActivity(), DetailNavigator{
         movie.reviewResult?.results?.let {
             reviewAdapter.swapReview(it)
         }
+        setBtnOnClick(movie)
     }
 
     private fun showError(message: String?) {
@@ -115,8 +126,25 @@ class DetailActivity : DaggerAppCompatActivity(), DetailNavigator{
         }
     }
 
+    private fun setBtnOnClick(movie: Movie) {
+        viewDataBinding.movieDetail.buttonLikeFavorite.setOnClickListener {
+            detailViewModel.addFavorite(movie)
+            showToast(ADDED_MSG)
+        }
+        viewDataBinding.movieDetail.buttonDislikeFavorite.setOnClickListener {
+            detailViewModel.deleteFavorite(movie)
+            showToast(REMOVED_MSG)
+
+        }
+    }
+
+    fun showToast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+
+
     companion object {
         const val MOVIE_ID_TAG = "movie_id"
+        const val ADDED_MSG = "Added to favorite"
+        const val REMOVED_MSG = "Removed from favorite"
         fun getIntent(context: Context, movieId: Int) = Intent(context, DetailActivity::class.java)
             .apply { putExtra(MOVIE_ID_TAG, movieId) }
     }

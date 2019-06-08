@@ -1,8 +1,11 @@
 package com.asterisk.tuandao.themoviedb.di
 
 import android.app.Application
+import androidx.room.Room
 import com.asterisk.tuandao.themoviedb.BuildConfig
 import com.asterisk.tuandao.themoviedb.data.source.MoviesDataSource
+import com.asterisk.tuandao.themoviedb.data.source.local.MovieDatabase
+import com.asterisk.tuandao.themoviedb.data.source.local.MoviesLocalDataSource
 import com.asterisk.tuandao.themoviedb.data.source.remote.MoviesApi
 import com.asterisk.tuandao.themoviedb.data.source.remote.MoviesRemoteDataSource
 import com.asterisk.tuandao.themoviedb.util.Constants
@@ -27,7 +30,7 @@ abstract class ApplicationModule {
         private const val QUERRY_PARAMETER_API_KEY = "api_key"
         private const val API_KEY = BuildConfig.API_KEY
         private const val BASE_URL = "https://api.themoviedb.org/"
-
+        private const val DATABASE_NAME = "movies.db"
         @JvmStatic
         @Singleton
         @Provides
@@ -102,10 +105,25 @@ abstract class ApplicationModule {
                 .build()
                 .create(MoviesApi::class.java)
         }
+
+        @JvmStatic
+        @Singleton
+        @Provides
+        fun provideDatabase(context: Application) =
+            Room.databaseBuilder(context.applicationContext, MovieDatabase::class.java, DATABASE_NAME).build()
+
+        @JvmStatic
+        @Singleton
+        @Provides
+        fun provideMovieDao(database: MovieDatabase) = database.movieDao()
+
     }
 
     @Singleton
     @Binds
     abstract fun provideRemoteDataSource(remoteDataSource: MoviesRemoteDataSource): MoviesDataSource.Remote
 
+    @Singleton
+    @Binds
+    abstract fun provideLocalDataSource(localDataSource: MoviesLocalDataSource): MoviesDataSource.Local
 }

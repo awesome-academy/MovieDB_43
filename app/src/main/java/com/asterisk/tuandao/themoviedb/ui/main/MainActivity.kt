@@ -5,6 +5,7 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.ui.base.BaseActivity
+import com.asterisk.tuandao.themoviedb.ui.favorite.FavoriteFragment
 import com.asterisk.tuandao.themoviedb.ui.genre.GenreFragment
 import com.asterisk.tuandao.themoviedb.ui.home.HomeFragment
 import com.asterisk.tuandao.themoviedb.ui.home.HomeViewModel
@@ -59,7 +60,13 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 return true
             }
             R.id.navigation_favorite -> {
-                //do something
+                val favoriteFragment = FavoriteFragment.newInstance() as Fragment
+                supportFragmentManager.switch(
+                    container,
+                    favoriteFragment,
+                    FAVORITE_FRAGMENT_TAG
+                )
+                return true
             }
         }
         return false
@@ -68,5 +75,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     companion object {
         const val MOVIES_FRAGMENT_TAG = "movies_fragment"
         const val GENRES_FRAGMENT_TAG = "genres_fragment"
+        const val FAVORITE_FRAGMENT_TAG ="favorite_fragment"
     }
 }

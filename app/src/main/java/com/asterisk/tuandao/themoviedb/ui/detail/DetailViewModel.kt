@@ -9,6 +9,8 @@ import com.asterisk.tuandao.themoviedb.data.source.repository.MoviesRepository
 import com.asterisk.tuandao.themoviedb.ui.base.BaseViewModel
 import com.asterisk.tuandao.themoviedb.util.Event
 import com.asterisk.tuandao.themoviedb.util.handleData
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class DetailViewModel
@@ -23,9 +25,14 @@ class DetailViewModel
     private val _selectedMovie = MutableLiveData<Int>()
     val selectedMovie: LiveData<Int>
         get() = _selectedMovie
+
     private val _selectedActor = MutableLiveData<Event<Int>>()
     val selectedActor: LiveData<Event<Int>>
         get() = _selectedActor
+
+    private val _isFavorite = MutableLiveData<Boolean>()
+    val isFavorite: LiveData<Boolean>
+        get() = _isFavorite
 
     fun getMoviesByMovie(movieId: Int) {
         compositeDisposable.add(
@@ -43,6 +50,34 @@ class DetailViewModel
 
     fun setMovieRenderView(movie: Movie) {
        _movieRenderView.value = movie
+    }
+
+    fun isFavorite(id: Int) {
+        val disposable = Observable.just(moviesRepository)
+            .subscribeOn(Schedulers.io())
+            .map { repo -> repo.getFavoriteById(id) }
+            .subscribe({ _isFavorite.postValue(it != null) }, { _isFavorite.postValue(false) })
+        compositeDisposable.add(disposable)
+    }
+
+    fun addFavorite(movie: Movie) {
+        val disposable = Observable.just(moviesRepository)
+            .subscribeOn(Schedulers.io())
+            .subscribe {
+                it.addFavorite(movie)
+                _isFavorite.postValue(true)
+            }
+        compositeDisposable.add(disposable)
+    }
+
+    fun deleteFavorite(movie: Movie) {
+        val disposable = Observable.just(moviesRepository)
+            .subscribeOn(Schedulers.io())
+            .subscribe {
+                it.deleteFavorite(movie)
+                _isFavorite.postValue(false)
+            }
+        compositeDisposable.add(disposable)
     }
 
     companion object {
