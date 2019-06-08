@@ -29,6 +29,9 @@ class HomeViewModel @Inject constructor
     private val _openMovieEvent = MutableLiveData<Event<Int>>()
     val openMovieEvent: LiveData<Event<Int>>
         get() = _openMovieEvent
+    private val _openSearchEvent = MutableLiveData<Event<Unit>>()
+    val openSearchEvent: LiveData<Event<Unit>>
+        get() = _openSearchEvent
 
     fun getMovies(mutableLiveData: MutableLiveData<Resources<MovieResponse>>) {
         compositeDisposable.add(
@@ -38,6 +41,10 @@ class HomeViewModel @Inject constructor
 
     fun openDetailMovie(movieId: Int) {
         _openMovieEvent.value = Event(movieId)
+    }
+
+    fun openSearchMovie() {
+        _openSearchEvent.value = Event(Unit)
     }
 
     companion object {

@@ -16,7 +16,7 @@ class GenreAdapter(private var genres: List<Genre>, private val genreViewModel: 
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.item_genre, parent, false
-            )
+            ), genreViewModel
         )
     }
 
@@ -24,7 +24,7 @@ class GenreAdapter(private var genres: List<Genre>, private val genreViewModel: 
 
     override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
         val genre = genres[position]
-        holder.bindView(genre, genreViewModel)
+        holder.bindView(genre)
     }
 
     fun swapAdapter(newGenres: List<Genre>) {
@@ -32,12 +32,17 @@ class GenreAdapter(private var genres: List<Genre>, private val genreViewModel: 
         notifyDataSetChanged()
     }
 
-    class GenreViewHolder(val binding: ItemGenreBinding) : RecyclerView.ViewHolder(binding.root) {
+    class GenreViewHolder(
+        val binding: ItemGenreBinding,
+        genreViewModel: GenreViewModel
+    ) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.genreViewModel = genreViewModel
+        }
 
-        fun bindView(data: Genre?, genreViewModel: GenreViewModel) {
+        fun bindView(data: Genre?) {
             binding.run {
                 this.genre = data
-                this.genreViewModel = genreViewModel
             }
         }
     }

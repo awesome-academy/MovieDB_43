@@ -12,6 +12,9 @@ import com.asterisk.tuandao.themoviedb.ui.main.MainModule
 import com.asterisk.tuandao.themoviedb.ui.movies.GenreMovieActivity
 import com.asterisk.tuandao.themoviedb.ui.movies.GenreMovieActivityScope
 import com.asterisk.tuandao.themoviedb.ui.movies.GenreMovieModule
+import com.asterisk.tuandao.themoviedb.ui.search.SearchActivity
+import com.asterisk.tuandao.themoviedb.ui.search.SearchActivityScope
+import com.asterisk.tuandao.themoviedb.ui.search.SearchModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -33,4 +36,8 @@ abstract class ActivityBuildersModule {
     @ActorActivityScope
     @ContributesAndroidInjector(modules = [ActorModule::class])
     abstract fun contributeActorAcitivity(): ActorActivity
+
+    @SearchActivityScope
+    @ContributesAndroidInjector(modules = [SearchModule::class])
+    abstract fun contributeSearchAcitivity(): SearchActivity
 }

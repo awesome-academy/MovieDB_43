@@ -4,6 +4,7 @@ import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.data.source.model.respone.ActorResponse
 import com.asterisk.tuandao.themoviedb.data.source.model.respone.GenreResponse
 import com.asterisk.tuandao.themoviedb.data.source.model.respone.MovieResponse
+import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -34,4 +35,11 @@ interface MoviesApi {
         @Path("person_id") personId: Int,
         @Query("append_to_response") append: String
     ): Single<ActorResponse>
+
+    @GET("/3/search/movie")
+    fun searchMovieByName(
+        @Query("query") key: String,
+        @Query("page") page: Int
+    ): Single<MovieResponse>
+
 }

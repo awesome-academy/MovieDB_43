@@ -17,6 +17,7 @@ import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.databinding.FragmentHomeBinding
 import com.asterisk.tuandao.themoviedb.ui.base.BaseFragment
 import com.asterisk.tuandao.themoviedb.ui.detail.DetailActivity
+import com.asterisk.tuandao.themoviedb.ui.search.SearchActivity
 import com.asterisk.tuandao.themoviedb.util.Constants
 import com.asterisk.tuandao.themoviedb.util.showMessage
 import javax.inject.Inject
@@ -52,11 +53,18 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
 
     override fun initComponents() {
         doObserveClickedMovie()
+        doObserveClickedSearch()
         doObserve()
     }
 
     override fun openMovieDetails(movieId: Int) {
         DetailActivity.getIntent(activity as Context, movieId).apply {
+            startActivity(this)
+        }
+    }
+
+    override fun openSearchMovie() {
+        SearchActivity.getIntent(activity as Context).apply {
             startActivity(this)
         }
     }
@@ -100,6 +108,14 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
         homeViewModel.openMovieEvent.observe(this, Observer { event ->
             event.getContentIfNotHandled()?.let {
                 openMovieDetails(it)
+            }
+        })
+    }
+
+    private fun doObserveClickedSearch() {
+        homeViewModel.openSearchEvent.observe(this, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                openSearchMovie()
             }
         })
     }

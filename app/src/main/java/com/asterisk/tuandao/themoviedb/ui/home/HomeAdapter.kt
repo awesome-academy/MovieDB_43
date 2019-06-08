@@ -15,7 +15,7 @@ class HomeAdapter(private var movies: List<Movie>, private val viewModel: HomeVi
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.item_home_movie, parent, false
-            )
+            ), viewModel
         )
     }
 
@@ -23,7 +23,7 @@ class HomeAdapter(private var movies: List<Movie>, private val viewModel: HomeVi
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         val movie = movies[position]
-        holder.bindView(movie, viewModel)
+        holder.bindView(movie)
     }
 
     fun swapAdapter(newMovies: List<Movie>) {
@@ -31,12 +31,17 @@ class HomeAdapter(private var movies: List<Movie>, private val viewModel: HomeVi
         notifyDataSetChanged()
     }
 
-    class HomeViewHolder(val binding: ItemHomeMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+    class HomeViewHolder(
+        val binding: ItemHomeMovieBinding,
+        homeViewModel: HomeViewModel
+    ) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.viewmodel = homeViewModel
+        }
 
-        fun bindView(data: Movie?, homeViewModel: HomeViewModel) {
+        fun bindView(data: Movie?) {
             binding.run {
                 movie = data
-                viewmodel = homeViewModel
             }
         }
     }
