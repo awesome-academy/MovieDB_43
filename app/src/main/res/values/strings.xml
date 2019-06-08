@@ -20,8 +20,10 @@
     <string name="info_birth">Plate of Birth: Cam Pha Quang Ninh</string>
     <string name="info_male">Genre: Male</string>
     <string name="info_born">Born: 25 Sep 1968</string>
-    <string name="title_born">Born: </string>
+    <string name="title_born">Born:</string>
     <string name="genre_male">Gender: Male</string>
     <string name="genre_female">Gender: Female</string>
     <string name="title_known_for">Known For</string>
+    <string name="title_vote">IMDB Score:</string>
+    <string name="title_list_date">Released Date:</string>
 </resources>

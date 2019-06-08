@@ -8,6 +8,7 @@ import com.asterisk.tuandao.themoviedb.ui.genre.GenreViewModel
 import com.asterisk.tuandao.themoviedb.ui.home.HomeViewModel
 import com.asterisk.tuandao.themoviedb.ui.main.MainViewModel
 import com.asterisk.tuandao.themoviedb.ui.movies.GenreMovieViewModel
+import com.asterisk.tuandao.themoviedb.ui.search.SearchViewModel
 import com.asterisk.tuandao.themoviedb.util.MovieViewModelFactory
 import dagger.Binds
 import dagger.Module
@@ -40,6 +41,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ActorViewModel::class)
     abstract fun bindActorViewModel(actorViewModel: ActorViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: MovieViewModelFactory): ViewModelProvider.Factory

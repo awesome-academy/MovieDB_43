@@ -9,4 +9,6 @@
     <color name="color_bold_silver">#343F4B</color>
     <color name="color_text_release">#969FAA</color>
     <color name="color_text_actor">#B3BDC8</color>
+    <color name="color_light_gray">#EFF0F2</color>
+    <color name="color_dark_gold">#665900</color>
 </resources>

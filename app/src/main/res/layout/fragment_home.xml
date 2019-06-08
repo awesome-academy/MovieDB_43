@@ -19,6 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_bold_silver"
+                android:onClick="@{() -> viewmodel.openSearchMovie()}"
                 app:layout_constraintTop_toTopOf="parent">
             <androidx.appcompat.widget.SearchView
                     android:id="@+id/searchView"
