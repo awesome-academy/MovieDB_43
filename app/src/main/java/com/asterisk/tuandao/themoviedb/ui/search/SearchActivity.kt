@@ -33,7 +33,7 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
         initComponent()
     }
 
-    fun initComponent() {
+    private fun initComponent() {
         setupActionBar()
         initAdapter()
         initBackBtn()

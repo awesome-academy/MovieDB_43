@@ -26,4 +26,5 @@
     <string name="title_known_for">Known For</string>
     <string name="title_vote">IMDB Score:</string>
     <string name="title_list_date">Released Date:</string>
+    <string name="title_fav_movies">Favorite Movies</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.asterisk.tuandao.themoviedb.di
 
+import com.asterisk.tuandao.themoviedb.ui.favorite.FavoriteFragment
+import com.asterisk.tuandao.themoviedb.ui.favorite.FavoriteModule
 import com.asterisk.tuandao.themoviedb.ui.genre.GenreFragment
 import com.asterisk.tuandao.themoviedb.ui.genre.GenreFragmentScope
 import com.asterisk.tuandao.themoviedb.ui.genre.GenreModule
@@ -18,4 +20,8 @@ abstract class MainFragmentBuildersModule {
     @GenreFragmentScope
     @ContributesAndroidInjector(modules = [GenreModule::class])
     abstract fun contributeGenreFragment(): GenreFragment
+
+    @GenreFragmentScope
+    @ContributesAndroidInjector(modules = [FavoriteModule::class])
+    abstract fun contributeFavoriteFragment(): FavoriteFragment
 }

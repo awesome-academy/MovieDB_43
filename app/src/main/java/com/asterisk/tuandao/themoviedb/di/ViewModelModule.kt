@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.asterisk.tuandao.themoviedb.ui.actor.ActorViewModel
 import com.asterisk.tuandao.themoviedb.ui.detail.DetailViewModel
+import com.asterisk.tuandao.themoviedb.ui.favorite.FavoriteViewModel
 import com.asterisk.tuandao.themoviedb.ui.genre.GenreViewModel
 import com.asterisk.tuandao.themoviedb.ui.home.HomeViewModel
 import com.asterisk.tuandao.themoviedb.ui.main.MainViewModel
@@ -46,6 +47,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
     abstract fun bindSearchViewModel(searchViewModel: SearchViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteViewModel::class)
+    abstract fun bindFavoriteViewModel(favoriteViewModel: FavoriteViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: MovieViewModelFactory): ViewModelProvider.Factory
