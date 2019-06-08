@@ -11,13 +11,13 @@ import com.asterisk.tuandao.themoviedb.databinding.ItemActorRelatedMovieBinding
 
 class RelativeMovieAdapter(
     private var movies: List<Movie>,
-    val actorViewModel: ActorViewModel
+    private val actorViewModel: ActorViewModel
 ) : RecyclerView.Adapter<RelativeMovieAdapter.RelativeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RelativeViewHolder {
         return RelativeViewHolder(
             DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context), R.layout.item_actor, parent, false), actorViewModel)
+                LayoutInflater.from(parent.context), R.layout.item_actor_related_movie, parent, false), actorViewModel)
     }
 
     override fun getItemCount() = movies.size

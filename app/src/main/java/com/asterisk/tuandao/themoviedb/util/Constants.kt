@@ -10,4 +10,9 @@ object Constants {
     const val SPAN_COUNT = 2
     const val GENRE_ID_TAG = "genre_id"
     const val DEFAULT_PAGE = 1
+    const val BIRTHDAY_TITLE = "Born:"
+    const val PLACE_OF_BIRTHDAY_TITLE = "Place of birthday:"
+    const val DEATH_DAY_TITLE = "Death day:"
+    const val GENDER_FAMALE = 1
+    const val GENDER_MALE = 2
 }

@@ -1,7 +1,6 @@
 package com.asterisk.tuandao.themoviedb.data.source.model.respone
 
-import com.asterisk.tuandao.themoviedb.data.source.model.Actor
-import com.asterisk.tuandao.themoviedb.data.source.model.Movie
+import com.asterisk.tuandao.themoviedb.data.source.model.MovieCredit
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -20,7 +19,7 @@ class ActorResponse {
 
     @SerializedName("movie_credits")
     @Expose
-    val movies: List<Movie>? = null
+    val movieCredit: MovieCredit? = null
 
     @SerializedName("deathday")
     @Expose

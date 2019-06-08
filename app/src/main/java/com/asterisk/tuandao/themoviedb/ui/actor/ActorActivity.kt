@@ -3,13 +3,13 @@ package com.asterisk.tuandao.themoviedb.ui.actor
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.asterisk.tuandao.themoviedb.R
-import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.data.source.model.respone.ActorResponse
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.databinding.ActivityActorBinding
@@ -33,7 +33,8 @@ class ActorActivity : DaggerAppCompatActivity(), ActorNavigator {
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.viewmodel = actorViewModel
 
-        intent.getIntExtra(DetailActivity.MOVIE_ID_TAG, 0).let {
+        intent.getIntExtra(ACTOR_ID_TAG, 0).let {
+            Log.d("ActorActivity", "$ACTOR_ID_TAG $it")
             actorViewModel.setSelectedActor(it)
         }
         initActionBar()
@@ -58,30 +59,42 @@ class ActorActivity : DaggerAppCompatActivity(), ActorNavigator {
 
     fun initComponent() {
         doObserve()
+        doObserveClickedMovie()
     }
 
     private fun doObserve() {
-       actorViewModel.selectedActor.observe(this, Observer {
-           actorViewModel.setSelectedActor(it)
-       })
-       actorViewModel.actorDetail.observe(this, Observer {
-           when (it) {
-               is Resources.Progress -> {
-                   //do something
-               }
-               is Resources.Success -> {
-                   showSuccess(it.data)
-               }
-               is Resources.Failure -> {
-                   showError(it.e.message)
-               }
-           }
-       })
+        actorViewModel.selectedActor.observe(this, Observer {
+            actorViewModel.getActorDetail(it)
+        })
+        actorViewModel.actorDetail.observe(this, Observer {
+            when (it) {
+                is Resources.Progress -> {
+                    //do something
+                }
+                is Resources.Success -> {
+                    showSuccess(it.data)
+                }
+                is Resources.Failure -> {
+                    showError(it.e.message)
+                }
+            }
+        })
+    }
+
+    fun doObserveClickedMovie() {
+        actorViewModel.selectedMovie.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { movieId ->
+                openMovieDetail(movieId)
+            }
+        })
     }
 
     private fun showSuccess(data: ActorResponse?) {
         data?.let {
-            it.movies?.let { movies -> relativeMovieAdapter.swapAdapter(movies) }
+            actorViewModel.setMovieRenderView(it)
+            it.movieCredit?.movies?.let { movies ->
+                relativeMovieAdapter.swapAdapter(movies)
+            }
             while (viewDataBinding.recyclerMovie.itemDecorationCount > 0
                 && (viewDataBinding.recyclerMovie.getItemDecorationAt(0)?.let { itemDecoration = it }) != null
             ) {
@@ -96,13 +109,15 @@ class ActorActivity : DaggerAppCompatActivity(), ActorNavigator {
         }
     }
 
-    override fun openGenreMovies(genreId: String) {
-
+    override fun openMovieDetail(movieId: Int) {
+        DetailActivity.getIntent(this, movieId).apply {
+            startActivity(this)
+        }
     }
 
     companion object {
         const val ACTOR_ID_TAG = "actor_id"
-        fun getIntent(context: Context, movieId: Int) = Intent(context, ActorActivity::class.java)
-            .apply { putExtra(ACTOR_ID_TAG, movieId) }
+        fun getIntent(context: Context, actorId: Int) = Intent(context, ActorActivity::class.java)
+            .apply { putExtra(ACTOR_ID_TAG, actorId) }
     }
 }
