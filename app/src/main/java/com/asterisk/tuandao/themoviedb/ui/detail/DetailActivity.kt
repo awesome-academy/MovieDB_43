@@ -13,11 +13,12 @@ import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.databinding.ActivityDetailBinding
+import com.asterisk.tuandao.themoviedb.ui.actor.ActorActivity
 import com.asterisk.tuandao.themoviedb.util.showMessage
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-class DetailActivity : DaggerAppCompatActivity() {
+class DetailActivity : DaggerAppCompatActivity(), DetailNavigator{
 
     private lateinit var viewDataBinding: ActivityDetailBinding
     private lateinit var castAdapter: CastAdapter
@@ -61,6 +62,7 @@ class DetailActivity : DaggerAppCompatActivity() {
 
     private fun initComponent() {
         doObserve()
+        doObserverClickedActor()
     }
 
     private fun doObserve() {
@@ -82,6 +84,14 @@ class DetailActivity : DaggerAppCompatActivity() {
         })
     }
 
+    private fun doObserverClickedActor() {
+        detailViewModel.selectedActor.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { actorId ->
+                openActorDetail(actorId)
+            }
+        })
+    }
+
     private fun showSuccess(movie: Movie) {
         detailViewModel.setMovieRenderView(movie)
         youtubeVideoFragment.setVideoId(movie.videoResult?.videos?.get(0)?.key)
@@ -96,6 +106,12 @@ class DetailActivity : DaggerAppCompatActivity() {
     private fun showError(message: String?) {
         message?.let {
             this?.showMessage(it)
+        }
+    }
+
+    override fun openActorDetail(actorId: Int) {
+        ActorActivity.getIntent(this, actorId).apply {
+            startActivity(this)
         }
     }
 

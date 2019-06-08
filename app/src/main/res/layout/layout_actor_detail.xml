@@ -4,7 +4,6 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
                 name="viewmodel"
                 type="com.asterisk.tuandao.themoviedb.ui.actor.ActorViewModel"/>
@@ -12,7 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/color_back_ground_home">
 
         <TextView
                 android:id="@+id/textActorName"
@@ -21,6 +21,7 @@
                 android:layout_marginTop="@dimen/dp_16"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@android:color/white"
+                android:text="@{viewmodel.actorRenderView.name}"
                 app:layout_constraintBottom_toTopOf="@+id/imageMovie"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/imageMovie"
@@ -33,6 +34,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/dp_8"
                 android:scaleType="fitXY"
+                app:imageUrl="@{viewmodel.actorRenderView.profilePath}"
                 app:layout_constraintDimensionRatio="3:4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.15"
@@ -47,6 +49,7 @@
                 android:layout_marginLeft="@dimen/dp_8"
                 android:layout_marginRight="@dimen/dp_8"
                 android:textColor="@android:color/white"
+                app:setTextBirthday="@{viewmodel.actorRenderView.birthday}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/imageMovie"
@@ -62,10 +65,11 @@
                 android:layout_marginTop="@dimen/dp_16"
                 android:layout_marginRight="@dimen/dp_8"
                 android:textColor="@android:color/white"
+                app:setTextDeathDay="@{viewmodel.actorRenderView.deathday}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/imageMovie"
                 app:layout_constraintTop_toBottomOf="@+id/textActorBirthday"
-                tools:text="Genre: Male"/>
+                tools:text="Death Day: 1323123"/>
 
         <TextView
                 android:id="@+id/textPlaceOfBirth"
@@ -75,6 +79,7 @@
                 android:layout_marginTop="@dimen/dp_16"
                 android:layout_marginRight="@dimen/dp_8"
                 android:textColor="@android:color/white"
+                app:setTextPlaceOfBirth="@{viewmodel.actorRenderView.placeOfBirth}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/imageMovie"
                 app:layout_constraintTop_toBottomOf="@+id/textDeath"
@@ -88,6 +93,7 @@
                 android:layout_marginTop="@dimen/dp_16"
                 android:layout_marginRight="@dimen/dp_8"
                 android:textColor="@android:color/white"
+                app:setTextGender="@{viewmodel.actorRenderView.gender}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/imageMovie"
                 app:layout_constraintTop_toBottomOf="@+id/textPlaceOfBirth"

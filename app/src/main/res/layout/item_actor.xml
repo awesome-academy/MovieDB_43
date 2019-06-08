@@ -1,61 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="actor"
-            type="com.asterisk.tuandao.themoviedb.data.source.model.Actor" />
+                name="actor"
+                type="com.asterisk.tuandao.themoviedb.data.source.model.Actor"/>
 
         <variable
-            name="viewmodel"
-            type="com.asterisk.tuandao.themoviedb.ui.detail.DetailViewModel" />
+                name="viewmodel"
+                type="com.asterisk.tuandao.themoviedb.ui.detail.DetailViewModel"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="@dimen/dp_120"
-        android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewmodel.setSelectedActor(actor.id)}">
 
         <ImageView
-            android:id="@+id/imageActor"
-            android:layout_width="@dimen/dp_120"
-            android:layout_height="0dp"
-            android:scaleType="fitXY"
-            app:imageUrl="@{actor.profilePath}"
-            app:layout_constraintDimensionRatio="3:4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:background="@color/color_primary" />
+                android:id="@+id/imageActor"
+                android:layout_width="@dimen/dp_120"
+                android:layout_height="0dp"
+                android:scaleType="fitXY"
+                app:imageUrl="@{actor.profilePath}"
+                app:layout_constraintDimensionRatio="3:4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:background="@color/color_primary"/>
 
         <TextView
-            android:id="@+id/textActorName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:singleLine="true"
-            android:text="@{actor.name}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageActor"
-            tools:text="@string/fake_text_actor_name" />
+                android:id="@+id/textActorName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:text="@{actor.name}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageActor"
+                tools:text="@string/fake_text_actor_name"/>
 
         <TextView
-            android:id="@+id/textCharacter"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:singleLine="true"
-            android:text="@{actor.character}"
-            android:textColor="@color/color_text_actor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textActorName"
-            tools:text="@string/fake_text_character" />
+                android:id="@+id/textCharacter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:text="@{actor.character}"
+                android:textColor="@color/color_text_actor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textActorName"
+                tools:text="@string/fake_text_character"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

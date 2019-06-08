@@ -19,14 +19,19 @@ interface MoviesApi {
 
     @GET("/3/discover/movie")
     fun getMoviesByGenre(
-            @Query("page") page: Int
-            , @Query("with_genres") genreId: String
+        @Query("page") page: Int
+        , @Query("with_genres") genreId: String
     ): Single<MovieResponse>
 
     @GET("/3/movie/{id}")
-    fun getMoviesById(@Path("id") movieId: Int,
-                      @Query("append_to_response") append: String): Single<Movie>
-    @GET("/3/movie/{person_id}")
-    fun getPersonById(@Path("person_id") personId: Int,
-                      @Query("append_to_response") append: String): Single<ActorResponse>
+    fun getMoviesById(
+        @Path("id") movieId: Int,
+        @Query("append_to_response") append: String
+    ): Single<Movie>
+
+    @GET("/3/person/{person_id}")
+    fun getPersonById(
+        @Path("person_id") personId: Int,
+        @Query("append_to_response") append: String
+    ): Single<ActorResponse>
 }

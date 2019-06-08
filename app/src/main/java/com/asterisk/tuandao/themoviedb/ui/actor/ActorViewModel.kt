@@ -7,6 +7,7 @@ import com.asterisk.tuandao.themoviedb.data.source.model.respone.ActorResponse
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.data.source.repository.MoviesRepository
 import com.asterisk.tuandao.themoviedb.ui.base.BaseViewModel
+import com.asterisk.tuandao.themoviedb.util.Event
 import com.asterisk.tuandao.themoviedb.util.handleData
 import javax.inject.Inject
 
@@ -23,6 +24,9 @@ class ActorViewModel @Inject constructor(
     private val _selectedActor = MutableLiveData<Int>()
     val selectedActor: LiveData<Int>
         get() = _selectedActor
+    private val _selectedMovie = MutableLiveData<Event<Int>>()
+    val selectedMovie: LiveData<Event<Int>>
+        get() = _selectedMovie
 
     fun getActorDetail(personId: Int) {
         compositeDisposable.add(
@@ -36,6 +40,10 @@ class ActorViewModel @Inject constructor(
 
     fun setMovieRenderView(actorResponse: ActorResponse) {
         _actorRenderView.value = actorResponse
+    }
+
+    fun setSelectedMovie(movieId: Int) {
+        _selectedMovie.value = Event(movieId)
     }
 
     companion object {
