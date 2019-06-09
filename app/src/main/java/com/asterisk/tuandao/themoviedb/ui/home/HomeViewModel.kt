@@ -19,6 +19,7 @@ class HomeViewModel @Inject constructor
     val moviesRepository: MoviesRepository
 ) : BaseViewModel(application) {
 
+    private var currentPage = 1
     private val _movies: MutableLiveData<Resources<MovieResponse>> by lazy {
         MutableLiveData<Resources<MovieResponse>>().also {
             getMovies(it)
@@ -32,10 +33,29 @@ class HomeViewModel @Inject constructor
     private val _openSearchEvent = MutableLiveData<Event<Unit>>()
     val openSearchEvent: LiveData<Event<Unit>>
         get() = _openSearchEvent
+    private val _loadMore = MutableLiveData<Boolean>()
+    val loadMore: LiveData<Boolean>
+        get() = _loadMore
 
     fun getMovies(mutableLiveData: MutableLiveData<Resources<MovieResponse>>) {
         compositeDisposable.add(
-            moviesRepository.getMovies(DEFAULT_PAGE).handleData(mutableLiveData)
+            moviesRepository.getMovies(currentPage).handleData(mutableLiveData)
+        )
+    }
+
+    fun getMoreMovies() {
+        _movies.value = Resources.loading(true)
+        compositeDisposable.add(
+            moviesRepository.getMovies(currentPage)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _movies.value = Resources.success(it)
+                    _loadMore.value = false
+                }, {
+                    _movies.value = Resources.failure(it)
+                    _loadMore.value = false
+                })
         )
     }
 
@@ -47,7 +67,14 @@ class HomeViewModel @Inject constructor
         _openSearchEvent.value = Event(Unit)
     }
 
+    fun increareCurrentPage() {
+        currentPage++
+    }
+
+    fun setLoadMore(status: Boolean) {
+        _loadMore.value = status
+    }
+
     companion object {
-        private const val DEFAULT_PAGE = 1
     }
 }

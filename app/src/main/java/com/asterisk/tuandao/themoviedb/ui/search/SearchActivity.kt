@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.widget.SearchView
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +23,6 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
     private lateinit var searchAdapter: SearchMovieAdapter
     @Inject
     lateinit var searchViewModel: SearchViewModel
-    private var page = 1
     private lateinit var query: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +39,7 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
         initBackBtn()
         doObserve()
         doObserveClickMovie()
+        loadMore()
         viewDataBinding.textSearch.setOnQueryTextListener(this)
     }
 
@@ -93,7 +94,7 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
 
     private fun showSuccess(data: List<Movie>?) {
         data?.let {
-            searchAdapter.swapAdapter(it)
+            searchAdapter.addData(it)
         }
     }
 
@@ -107,7 +108,8 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
         if (query!!.isEmpty()) return false
         this.query = query
         searchAdapter.clearAll()
-        searchViewModel.searchMovies(query, page)
+        searchViewModel.setKey(query)
+        searchViewModel.searchMovies()
         return true
     }
 
@@ -115,7 +117,8 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
         if (query!!.isEmpty()) return false
         this.query = query
         searchAdapter.clearAll()
-        searchViewModel.searchMovies(query, page)
+        searchViewModel.setKey(query)
+        searchViewModel.searchMovies()
         return true
     }
 
@@ -123,6 +126,17 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
         DetailActivity.getIntent(this, movieId).apply {
             startActivity(this)
         }
+    }
+
+    private fun loadMore() {
+        viewDataBinding.nestedScrollSearch.setOnScrollChangeListener(
+                NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
+                    if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                        searchViewModel.setLoadMore(true)
+                        searchViewModel.increareCurrentPage()
+                        searchViewModel.searchMovies()
+                    }
+                })
     }
 
     companion object {

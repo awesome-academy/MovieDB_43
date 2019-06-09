@@ -4,6 +4,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.asterisk.tuandao.themoviedb.R
+import com.asterisk.tuandao.themoviedb.util.Constants.IMAGE_SIZE_200
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
@@ -16,12 +17,38 @@ fun ImageView.setImage(url: String?) {
             placeholder(R.drawable.ic_loading)
             error(R.drawable.ic_loading)
         }
-        val imageLink = StringUtils.getImageLink(Constants.IMAGE_SIZE_200, url!!)
+        val imageLink = StringUtils.getImageLink(Constants.IMAGE_SIZE_200, url)
         Glide.with(this.context)
             .load(imageLink)
             .apply(requestOptions)
             .into(this)
     }
+//    Glide.with(this)
+//            .load(StringUtils.getImage(url))
+//            .error(R.drawable.ic_loading)
+//            .into(this)
+//    if (url == null || url.isEmpty()) {
+//        setImageResource(R.drawable.ic_loading)
+//    }
+//    val requestOptions = RequestOptions()
+//    requestOptions.placeholder(R.drawable.ic_loading)
+//    requestOptions.error(R.drawable.ic_loading)
+//    val imageLink = StringUtils.getImageLink(IMAGE_SIZE_200, url!!)
+//    Glide.with(context)
+//            .load(imageLink)
+//            .apply(requestOptions)
+//            .into(this)
+//    if (url == null || url.isEmpty()) {
+//        setImageResource(R.drawable.ic_loading)
+//    }
+//    val imageLink = StringUtils.getImageLink(IMAGE_SIZE_200, url)
+//    val requestOptions = RequestOptions()
+//    requestOptions.placeholder(R.drawable.ic_loading)
+//    requestOptions.error(R.drawable.ic_loading)
+//    Glide.with(context)
+//        .load(imageLink)
+//        .apply(requestOptions.circleCrop().transform())
+//        .into(imageView)
 }
 
 @BindingAdapter("setTextGender")

@@ -32,6 +32,11 @@ class GenreMovieAdapter(private var movies: List<Movie>, val genreMovieViewModel
         notifyDataSetChanged()
     }
 
+    fun addData(newMovies: List<Movie>) {
+        (movies as MutableList).addAll(newMovies)
+        notifyDataSetChanged()
+    }
+
     class GenreMovieViewHolder(val binding: ItemGenreMovieBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(data: Movie?, genreMovieViewModel: GenreMovieViewModel) {

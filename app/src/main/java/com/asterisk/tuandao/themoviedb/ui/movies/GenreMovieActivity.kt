@@ -3,6 +3,7 @@ package com.asterisk.tuandao.themoviedb.ui.movies
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -36,12 +37,16 @@ class GenreMovieActivity : DaggerAppCompatActivity(), GenreMovieNavigator {
             genreMovieViewModel.setSelectedGenre(it)
         }
         viewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_genre_movie)
+        viewDataBinding.viewModel = genreMovieViewModel
+        viewDataBinding.lifecycleOwner = this
         initAdapter()
         initComponent()
     }
 
     override fun openMovieDetails(movieId: Int) {
-        DetailActivity.getIntent(this, movieId)
+        DetailActivity.getIntent(this, movieId).apply {
+            startActivity(this)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -71,6 +76,8 @@ class GenreMovieActivity : DaggerAppCompatActivity(), GenreMovieNavigator {
 
     private fun initComponent() {
         doObserve()
+        doObserveClicked()
+        loadMore()
     }
 
     private fun doObserve() {
@@ -93,9 +100,17 @@ class GenreMovieActivity : DaggerAppCompatActivity(), GenreMovieNavigator {
         })
     }
 
+    private fun doObserveClicked() {
+        genreMovieViewModel.openMovieEvent.observe(this, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                openMovieDetails(it)
+            }
+        })
+    }
+
     private fun showSuccess(data: List<Movie>?) {
         data?.let {
-            genreMovieAdapter.swapAdapter(it)
+            genreMovieAdapter.addData(it)
             while (viewDataBinding.recyclerMovie.itemDecorationCount > 0
                 && (viewDataBinding.recyclerMovie.getItemDecorationAt(
                     0
@@ -104,6 +119,19 @@ class GenreMovieActivity : DaggerAppCompatActivity(), GenreMovieNavigator {
                 viewDataBinding.recyclerMovie.removeItemDecoration(itemDecoration!!)
             }
         }
+    }
+
+    private fun loadMore() {
+        viewDataBinding.nestedScroll.setOnScrollChangeListener(
+                NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
+                    if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                        genreMovieViewModel.setLoadMore(true)
+                        genreMovieViewModel.increareCurrentPage()
+                        genreMovieViewModel.selectedGenre.value?.let {
+                            genreMovieViewModel.getMoviesByGenre(it)
+                        }
+                    }
+                })
     }
 
     private fun showError(message: String?) {

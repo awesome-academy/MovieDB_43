@@ -33,6 +33,11 @@ class SearchMovieAdapter(
         notifyDataSetChanged()
     }
 
+    fun addData(newMovies: List<Movie>) {
+        (movies as MutableList).addAll(newMovies)
+        notifyDataSetChanged()
+    }
+
     fun clearAll(){
         (movies as MutableList).clear()
     }

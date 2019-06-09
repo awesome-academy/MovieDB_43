@@ -15,4 +15,6 @@ object Constants {
     const val DEATH_DAY_TITLE = "Death day:"
     const val GENDER_FAMALE = 1
     const val GENDER_MALE = 2
+    const val BASE_IMAGE_PATH = "https://image.tmdb.org/t/p/"
+    const val IMAGE_SIZE_W500 = "w500/";
 }
