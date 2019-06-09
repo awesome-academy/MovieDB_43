@@ -15,4 +15,8 @@ object Constants {
     const val DEATH_DAY_TITLE = "Death day:"
     const val GENDER_FAMALE = 1
     const val GENDER_MALE = 2
+    const val KEY_POPULAR_MOVIE = 1
+    const val KEY_GENRE_MOVIE = 2
+    const val KEY_SEARCH_MOVIE = 3
+    const val KEY_REVIEW = 4
 }

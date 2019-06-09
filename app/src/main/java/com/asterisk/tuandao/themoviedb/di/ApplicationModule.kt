@@ -1,13 +1,19 @@
 package com.asterisk.tuandao.themoviedb.di
 
 import android.app.Application
+import androidx.paging.DataSource
+import androidx.paging.PageKeyedDataSource
 import androidx.room.Room
 import com.asterisk.tuandao.themoviedb.BuildConfig
 import com.asterisk.tuandao.themoviedb.data.source.MoviesDataSource
 import com.asterisk.tuandao.themoviedb.data.source.local.MovieDatabase
 import com.asterisk.tuandao.themoviedb.data.source.local.MoviesLocalDataSource
+import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.data.source.remote.MoviesApi
 import com.asterisk.tuandao.themoviedb.data.source.remote.MoviesRemoteDataSource
+import com.asterisk.tuandao.themoviedb.data.source.remote.paging.MoviesDataSourceFactory
+import com.asterisk.tuandao.themoviedb.data.source.remote.paging.MoviesPagedDataSource
+import com.asterisk.tuandao.themoviedb.data.source.repository.MoviesRepository
 import com.asterisk.tuandao.themoviedb.util.Constants
 import com.asterisk.tuandao.themoviedb.util.hasNetwork
 import dagger.Binds
@@ -126,4 +132,5 @@ abstract class ApplicationModule {
     @Singleton
     @Binds
     abstract fun provideLocalDataSource(localDataSource: MoviesLocalDataSource): MoviesDataSource.Local
+
 }

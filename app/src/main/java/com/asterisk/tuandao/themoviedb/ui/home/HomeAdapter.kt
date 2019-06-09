@@ -1,29 +1,30 @@
 package com.asterisk.tuandao.themoviedb.ui.home
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.databinding.ItemHomeMovieBinding
 
 class HomeAdapter(private var movies: List<Movie>, private val viewModel: HomeViewModel) :
-    RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
-        return HomeViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.item_home_movie, parent, false
-            ), viewModel
-        )
+        PagedListAdapter<Movie, RecyclerView.ViewHolder>(diffCallback) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return HomeViewHolder(DataBindingUtil.inflate(layoutInflater,
+                R.layout.item_home_movie, parent, false), viewModel)
     }
 
-    override fun getItemCount() = movies.size
+    override fun getItemCount() = super.getItemCount()
 
-    override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
-        val movie = movies[position]
-        holder.bindView(movie)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val movie = getItem(position)
+        (holder as HomeViewHolder).bindView(movie)
     }
 
     fun swapAdapter(newMovies: List<Movie>) {
@@ -32,8 +33,8 @@ class HomeAdapter(private var movies: List<Movie>, private val viewModel: HomeVi
     }
 
     class HomeViewHolder(
-        val binding: ItemHomeMovieBinding,
-        homeViewModel: HomeViewModel
+            val binding: ItemHomeMovieBinding,
+            homeViewModel: HomeViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.viewmodel = homeViewModel
@@ -43,6 +44,20 @@ class HomeAdapter(private var movies: List<Movie>, private val viewModel: HomeVi
             binding.run {
                 movie = data
             }
+        }
+    }
+
+    companion object {
+        val diffCallback = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            @SuppressLint("DiffUtilEquals")
+            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return oldItem == newItem
+            }
+
         }
     }
 }

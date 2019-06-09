@@ -1,15 +1,23 @@
 package com.asterisk.tuandao.themoviedb.data.source.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.asterisk.tuandao.themoviedb.data.source.MoviesDataSource
 import com.asterisk.tuandao.themoviedb.data.source.local.MoviesLocalDataSource
+import com.asterisk.tuandao.themoviedb.data.source.model.Listing
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
+import com.asterisk.tuandao.themoviedb.data.source.remote.paging.MoviesDataSourceFactory
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MoviesRepository @Inject constructor(val moviesLocalDataSource: MoviesLocalDataSource,val moviesRemoteDataSource: MoviesDataSource.Remote)
-    : MoviesDataSource.Local, MoviesDataSource.Remote {
+class MoviesRepository @Inject constructor(
+    val moviesLocalDataSource: MoviesLocalDataSource,
+    val moviesRemoteDataSource: MoviesDataSource.Remote
+) : MoviesDataSource.Local, MoviesDataSource.Remote {
 
     override fun getMovies(page: Int) = moviesRemoteDataSource.getMovies(page)
 
@@ -31,4 +39,32 @@ class MoviesRepository @Inject constructor(val moviesLocalDataSource: MoviesLoca
 
     override fun getFavoriteById(movieId: Int) = moviesLocalDataSource.getFavoriteById(movieId)
 
+    fun getLoadMoviesWithPages(typeMovie: HashMap<Int,String>): LiveData<Listing<Movie>> {
+        val sourceFactory = MoviesDataSourceFactory(this, typeMovie)
+        val config = PagedList.Config.Builder()
+            .setPageSize(20)
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(40)
+            .build()
+        val moviePagedList = LivePagedListBuilder<Int, Movie>(sourceFactory, config).build()
+        val refreshState = Transformations.switchMap(sourceFactory.sourceLiveData) {
+            it.initialLoad
+        }
+        val mutableLiveData = MutableLiveData<Listing<Movie>>()
+        val livedata: LiveData<Listing<Movie>> = mutableLiveData
+        mutableLiveData.value = Listing(
+            pagedList = moviePagedList,
+            networkState = Transformations.switchMap(sourceFactory.sourceLiveData) {
+                it.networkState
+            },
+            retry = {
+                sourceFactory.sourceLiveData.value?.retryAllFailed()
+            },
+            refresh = {
+                sourceFactory.sourceLiveData.value?.invalidate()
+            },
+            refreshState = refreshState
+        )
+        return livedata
+    }
 }

@@ -3,14 +3,13 @@ package com.asterisk.tuandao.themoviedb.ui.home
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.asterisk.tuandao.themoviedb.data.source.model.respone.MovieResponse
-import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
+import androidx.lifecycle.Transformations
+import com.asterisk.tuandao.themoviedb.data.source.remote.paging.MoviesDataSourceFactory
 import com.asterisk.tuandao.themoviedb.data.source.repository.MoviesRepository
 import com.asterisk.tuandao.themoviedb.ui.base.BaseViewModel
+import com.asterisk.tuandao.themoviedb.util.Constants
 import com.asterisk.tuandao.themoviedb.util.Event
-import com.asterisk.tuandao.themoviedb.util.handleData
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.bumptech.glide.Glide.init
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor
@@ -18,26 +17,21 @@ class HomeViewModel @Inject constructor
     application: Application,
     val moviesRepository: MoviesRepository
 ) : BaseViewModel(application) {
-
-    private val _movies: MutableLiveData<Resources<MovieResponse>> by lazy {
-        MutableLiveData<Resources<MovieResponse>>().also {
-            getMovies(it)
-        }
+    var typeMovie: HashMap<Int,String> = HashMap()
+    init {
+        typeMovie[Constants.KEY_POPULAR_MOVIE] = ""
     }
-    val movie: LiveData<Resources<MovieResponse>>
-        get() = _movies
+    private val movieResult = moviesRepository.getLoadMoviesWithPages(typeMovie)
+    val movies = Transformations.switchMap(movieResult, { it.pagedList })
+    val networkState = Transformations.switchMap(movieResult, { it.networkState })!!
+    val refreshState = Transformations.switchMap(movieResult, { it.refreshState })!!
+
     private val _openMovieEvent = MutableLiveData<Event<Int>>()
     val openMovieEvent: LiveData<Event<Int>>
         get() = _openMovieEvent
     private val _openSearchEvent = MutableLiveData<Event<Unit>>()
     val openSearchEvent: LiveData<Event<Unit>>
         get() = _openSearchEvent
-
-    fun getMovies(mutableLiveData: MutableLiveData<Resources<MovieResponse>>) {
-        compositeDisposable.add(
-            moviesRepository.getMovies(DEFAULT_PAGE).handleData(mutableLiveData)
-        )
-    }
 
     fun openDetailMovie(movieId: Int) {
         _openMovieEvent.value = Event(movieId)
@@ -47,6 +41,14 @@ class HomeViewModel @Inject constructor
         _openSearchEvent.value = Event(Unit)
     }
 
+    fun retry() {
+        val listing = movieResult?.value
+        listing?.retry?.invoke()
+    }
+
+    fun refresh() {
+        movieResult.value?.refresh?.invoke()
+    }
     companion object {
         private const val DEFAULT_PAGE = 1
     }

@@ -1,19 +1,20 @@
 package com.asterisk.tuandao.themoviedb.ui.home
 
 import android.content.Context
+import android.graphics.pdf.PdfDocument
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
-import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
+import com.asterisk.tuandao.themoviedb.data.source.remote.NetworkState
+import com.asterisk.tuandao.themoviedb.data.source.remote.Status
 import com.asterisk.tuandao.themoviedb.databinding.FragmentHomeBinding
 import com.asterisk.tuandao.themoviedb.ui.base.BaseFragment
 import com.asterisk.tuandao.themoviedb.ui.detail.DetailActivity
@@ -36,6 +37,7 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewDataBinding = FragmentHomeBinding.inflate(inflater, container, false).apply {
             viewmodel = homeViewModel
+            lifecycleOwner = this@HomeFragment
         }
         initAdapter()
         return viewDataBinding.root
@@ -70,24 +72,54 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
     }
 
     private fun doObserve() {
-        homeViewModel.movie?.observe(this as Fragment, Observer {
-            when (it) {
-                is Resources.Progress -> {
-                    //do something
+//        homeViewModel.getMoviePagedList().observe(this, Observer {
+//            homeAdapter.submitList(it)
+//            removeLineReyclerView()
+//        })
+//
+//        homeViewModel.getLoading().observe(this, Observer {
+//            when (it) {
+//                is Resources.Progress -> {
+//                    viewDataBinding.processBar.visibility = View.VISIBLE
+//                }
+//                is Resources.Success -> {
+//                    viewDataBinding.processBar.visibility = View.GONE
+//                }
+//                is Resources.Failure -> {
+//                    viewDataBinding.processBar.visibility = View.GONE
+//                    showError(it.e.message)
+//                }
+//            }
+//        })
+        homeViewModel.movies.observe(this, Observer {
+            showSuccess(it)
+        })
+        homeViewModel.networkState.observe(this, Observer {
+            when(it?.status) {
+                Status.RUNNING -> {
+                    viewDataBinding.processBar.visibility = View.VISIBLE
                 }
-                is Resources.Success -> {
-                    showSuccess(it.data?.results)
+                Status.SUCCESS -> {
+                    viewDataBinding.processBar.visibility = View.GONE
+                    viewDataBinding.retryButton.visibility = View.GONE
                 }
-                is Resources.Failure -> {
-                    showError(it.e.message)
+                Status.FAILED -> {
+                    viewDataBinding.processBar.visibility = View.GONE
+                    viewDataBinding.retryButton.visibility = View.VISIBLE
                 }
             }
         })
+        homeViewModel.refreshState.observe(this, Observer {
+            viewDataBinding.refresh.isRefreshing = it == NetworkState.LOADING
+        })
+        viewDataBinding.refresh.setOnRefreshListener {
+            homeViewModel.refresh()
+        }
     }
 
-    private fun showSuccess(data: List<Movie>?) {
+    private fun showSuccess(data: PagedList<Movie>?) {
         data?.let {
-            homeAdapter.swapAdapter(it)
+            homeAdapter.submitList(it)
             while (viewDataBinding.recyclerMovie.itemDecorationCount > 0
                 && (viewDataBinding.recyclerMovie.getItemDecorationAt(
                     0
@@ -95,6 +127,16 @@ class HomeFragment : BaseFragment(), HomeMovieNavigator {
             ) {
                 viewDataBinding.recyclerMovie.removeItemDecoration(itemDecoration!!)
             }
+        }
+    }
+
+    fun removeLineReyclerView() {
+        while (viewDataBinding.recyclerMovie.itemDecorationCount > 0
+                && (viewDataBinding.recyclerMovie.getItemDecorationAt(
+                        0
+                )?.let { itemDecoration = it }) != null
+        ) {
+            viewDataBinding.recyclerMovie.removeItemDecoration(itemDecoration!!)
         }
     }
 
