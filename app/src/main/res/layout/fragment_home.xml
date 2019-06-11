@@ -3,8 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <import type="android.view.View" />
-        <import type="com.asterisk.tuandao.themoviedb.data.source.remote.NetworkState"/>
+
+        <import type="com.asterisk.tuandao.themoviedb.data.source.remote.NetworkState" />
+
         <variable
             name="viewmodel"
             type="com.asterisk.tuandao.themoviedb.ui.home.HomeViewModel" />
@@ -42,42 +45,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/relativeSearch" />
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/refresh"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textCategoryMovie"
-                app:layout_constraintBottom_toTopOf="@id/processBar">
+            android:id="@+id/refresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textCategoryMovie">
 
             <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerMovie"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_back_ground_home"/>
+                android:id="@+id/recyclerMovie"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_back_ground_home" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-        <ProgressBar
-                android:id="@+id/processBar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/color_back_ground_home"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:theme="@style/AppTheme.WhiteAccent"/>
-        <Button
-                android:id="@+id/retryButton"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:onClick="@{() -> viewmodel.retry()}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-        />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -3,14 +3,19 @@ package com.asterisk.tuandao.themoviedb.ui.search
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.asterisk.tuandao.themoviedb.R
+import com.asterisk.tuandao.themoviedb.adapter.MovieAdapter
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
+import com.asterisk.tuandao.themoviedb.data.source.remote.NetworkState
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
+import com.asterisk.tuandao.themoviedb.data.source.remote.Status
 import com.asterisk.tuandao.themoviedb.databinding.ActivitySearchBinding
 import com.asterisk.tuandao.themoviedb.ui.detail.DetailActivity
 import com.asterisk.tuandao.themoviedb.util.showMessage
@@ -19,11 +24,9 @@ import javax.inject.Inject
 
 class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener, SearchNavigator {
     private lateinit var viewDataBinding: ActivitySearchBinding
-    private lateinit var searchAdapter: SearchMovieAdapter
+    private lateinit var searchAdapter: MovieAdapter
     @Inject
     lateinit var searchViewModel: SearchViewModel
-    private var page = 1
-    private lateinit var query: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +51,11 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
     }
 
     fun initAdapter() {
-        searchAdapter = SearchMovieAdapter(ArrayList(), searchViewModel)
+        searchAdapter = MovieAdapter(this, R.layout.item_list_movie, searchViewModel){
+            searchViewModel.retry()
+        }
         with(viewDataBinding) {
             recyclerSearchMovies.layoutManager = LinearLayoutManager(this@SearchActivity, RecyclerView.VERTICAL, false)
-            recyclerSearchMovies.hasFixedSize()
             recyclerSearchMovies.adapter = searchAdapter
         }
     }
@@ -69,18 +73,18 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
 
     private fun doObserve() {
         searchViewModel.movies.observe(this, Observer {
-            when (it) {
-                is Resources.Progress -> {
-                    //do something
-                }
-                is Resources.Success -> {
-                    showSuccess(it.data?.results)
-                }
-                is Resources.Failure -> {
-                    showError(it.e.message)
-                }
-            }
+            showSuccess(it)
         })
+
+        searchViewModel.networkState.observe(this, Observer {
+            searchAdapter.setNetworkState(it)
+        })
+        searchViewModel.refreshState.observe(this, Observer {
+            viewDataBinding.refresh.isRefreshing = it == NetworkState.LOADING
+        })
+        viewDataBinding.refresh.setOnRefreshListener {
+            searchViewModel.refresh()
+        }
     }
 
     private fun doObserveClickMovie() {
@@ -91,9 +95,9 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
         })
     }
 
-    private fun showSuccess(data: List<Movie>?) {
+    private fun showSuccess(data: PagedList<Movie>?) {
         data?.let {
-            searchAdapter.swapAdapter(it)
+            searchAdapter.submitList(it)
         }
     }
 
@@ -105,17 +109,15 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query!!.isEmpty()) return false
-        this.query = query
-        searchAdapter.clearAll()
-        searchViewModel.searchMovies(query, page)
+        searchAdapter.submitList(null)
+        searchViewModel.setKeySearch(query)
         return true
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
         if (query!!.isEmpty()) return false
-        this.query = query
-        searchAdapter.clearAll()
-        searchViewModel.searchMovies(query, page)
+        searchAdapter.submitList(null)
+        searchViewModel.setKeySearch(query)
         return true
     }
 

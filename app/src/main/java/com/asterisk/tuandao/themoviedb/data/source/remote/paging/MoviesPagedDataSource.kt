@@ -1,5 +1,6 @@
 package com.asterisk.tuandao.themoviedb.data.source.remote.paging
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
@@ -188,7 +189,7 @@ class MoviesPagedDataSource(val moviesRepository: MoviesRepository, val typeMovi
     fun getLoadAfterSearchMovies(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>, key: String) {
         networkState.postValue(NetworkState.LOADING)
         compositeDisposable.add(
-            moviesRepository.getMoviesByGenre(pageNumber, key)
+            moviesRepository.searchMovieByName(key, pageNumber)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ movies ->
