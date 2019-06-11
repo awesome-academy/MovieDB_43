@@ -1,17 +1,16 @@
 package com.asterisk.tuandao.themoviedb.ui.home
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.databinding.ItemHomeMovieBinding
+import com.asterisk.tuandao.themoviedb.util.DiffCallback.diffCallback
 
-class HomeAdapter(private var movies: List<Movie>, private val viewModel: HomeViewModel) :
+class HomeAdapter(private var movies: List<Movie>, private val viewModel: HomeViewModel, private val retryCallback: () -> Unit) :
         PagedListAdapter<Movie, RecyclerView.ViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -47,17 +46,4 @@ class HomeAdapter(private var movies: List<Movie>, private val viewModel: HomeVi
         }
     }
 
-    companion object {
-        val diffCallback = object : DiffUtil.ItemCallback<Movie>() {
-            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-                return oldItem.id == newItem.id
-            }
-
-            @SuppressLint("DiffUtilEquals")
-            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-                return oldItem == newItem
-            }
-
-        }
-    }
 }

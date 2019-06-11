@@ -1,5 +1,6 @@
 package com.asterisk.tuandao.themoviedb.data.source.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -10,6 +11,7 @@ import com.asterisk.tuandao.themoviedb.data.source.local.MoviesLocalDataSource
 import com.asterisk.tuandao.themoviedb.data.source.model.Listing
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.data.source.remote.paging.MoviesDataSourceFactory
+import com.asterisk.tuandao.themoviedb.util.Constants
 import javax.inject.Inject
 import javax.inject.Singleton
 
