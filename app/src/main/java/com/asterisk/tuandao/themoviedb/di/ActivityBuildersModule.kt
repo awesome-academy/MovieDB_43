@@ -1,5 +1,8 @@
 package com.asterisk.tuandao.themoviedb.di
 
+import com.asterisk.tuandao.themoviedb.ui.actor.ActorActivity
+import com.asterisk.tuandao.themoviedb.ui.actor.ActorActivityScope
+import com.asterisk.tuandao.themoviedb.ui.actor.ActorModule
 import com.asterisk.tuandao.themoviedb.ui.detail.DetailActivity
 import com.asterisk.tuandao.themoviedb.ui.detail.DetailActivityScope
 import com.asterisk.tuandao.themoviedb.ui.detail.DetailModule
@@ -26,4 +29,8 @@ abstract class ActivityBuildersModule {
     @GenreMovieActivityScope
     @ContributesAndroidInjector(modules = [GenreMovieModule::class])
     abstract fun contributeGenreMovieAcitivity(): GenreMovieActivity
+
+    @ActorActivityScope
+    @ContributesAndroidInjector(modules = [ActorModule::class])
+    abstract fun contributeActorAcitivity(): ActorActivity
 }

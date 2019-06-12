@@ -8,13 +8,17 @@ import com.bumptech.glide.request.RequestOptions
 
 @BindingAdapter("imageUrl")
 fun ImageView.setImage(url: String?) {
-    val requestOptions = RequestOptions().apply {
-        placeholder(R.drawable.ic_loading)
-        error(R.drawable.ic_loading)
+    if (url == null) {
+        setImageResource(R.drawable.ic_loading)
+    } else {
+        val requestOptions = RequestOptions().apply {
+            placeholder(R.drawable.ic_loading)
+            error(R.drawable.ic_loading)
+        }
+        val imageLink = StringUtils.getImageLink(Constants.IMAGE_SIZE_200, url!!)
+        Glide.with(this.context)
+            .load(imageLink)
+            .apply(requestOptions)
+            .into(this)
     }
-    val imageLink = StringUtils.getImageLink(Constants.IMAGE_SIZE_200, url!!)
-    Glide.with(this.context)
-        .load(imageLink)
-        .apply(requestOptions)
-        .into(this)
 }

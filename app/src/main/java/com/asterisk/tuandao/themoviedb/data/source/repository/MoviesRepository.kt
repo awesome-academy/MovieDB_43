@@ -15,4 +15,6 @@ class MoviesRepository @Inject constructor(val moviesRemoteDataSource: MoviesDat
     override fun getMoviesByGenre(page: Int, genreId: String) = moviesRemoteDataSource.getMoviesByGenre(page, genreId)
 
     override fun getMoviesById(page: Int, append: String) = moviesRemoteDataSource.getMoviesById(page, append)
+
+    override fun getPersonById(personId: Int, append: String) = moviesRemoteDataSource.getPersonById(personId, append)
 }

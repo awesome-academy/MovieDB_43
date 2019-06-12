@@ -14,8 +14,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".ui.detail.DetailActivity"/>
-        <activity android:name=".ui.movies.GenreMovieActivity">
-        </activity>
+        <activity android:name=".ui.movies.GenreMovieActivity"/>
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -24,4 +23,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

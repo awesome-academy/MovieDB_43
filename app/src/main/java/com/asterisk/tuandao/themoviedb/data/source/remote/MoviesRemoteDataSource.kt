@@ -14,4 +14,6 @@ class MoviesRemoteDataSource @Inject constructor(val movieApi: MoviesApi) : Movi
     override fun getMoviesByGenre(page: Int, genreId: String) = movieApi.getMoviesByGenre(page, genreId)
 
     override fun getMoviesById(page: Int, apppend: String) = movieApi.getMoviesById(page, apppend)
+
+    override fun getPersonById(personId: Int, append: String) = movieApi.getPersonById(personId, append)
 }
