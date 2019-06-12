@@ -1,22 +1,23 @@
 package com.asterisk.tuandao.themoviedb.ui.genre
 
-import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
 import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.data.source.model.Genre
 import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.databinding.FragmentGenreBinding
 import com.asterisk.tuandao.themoviedb.ui.base.BaseFragment
 import com.asterisk.tuandao.themoviedb.ui.movies.GenreMovieActivity
-import com.asterisk.tuandao.themoviedb.util.Constants
 import com.asterisk.tuandao.themoviedb.util.showMessage
+import kotlinx.android.synthetic.main.fragment_home.*
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class GenreFragment : BaseFragment(), GenreItemNavigator {
     override val layoutId: Int
@@ -32,10 +33,9 @@ class GenreFragment : BaseFragment(), GenreItemNavigator {
         return viewDataBinding.root
     }
 
-    override fun openGenreMovies(genreId: String) {
+    override fun openGenreMovies(genreId: String, title: String) {
         //open genre movies
-        val intent = Intent(activity, GenreMovieActivity::class.java).apply {
-            putExtra(Constants.GENRE_ID_TAG, genreId)
+        GenreMovieActivity.getIntent(this.context!!, genreId, title).apply {
             startActivity(this)
         }
     }
@@ -43,7 +43,7 @@ class GenreFragment : BaseFragment(), GenreItemNavigator {
     private fun initAdapter() {
         genreAdapter = GenreAdapter(ArrayList(), genreViewModel)
         with(viewDataBinding) {
-            recyclerGenre.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+            recyclerGenre.layoutManager = GridLayoutManager(activity, 2)
             recyclerGenre.setHasFixedSize(true)
             recyclerGenre.adapter = genreAdapter
         }
@@ -56,9 +56,28 @@ class GenreFragment : BaseFragment(), GenreItemNavigator {
     }
 
     private fun showSuccess(genres: List<Genre>?) {
-        genres?.let {
-            genreAdapter.swapAdapter(it)
-        }
+        Handler().postDelayed({
+            genres?.let {
+                var nowPlaying = Genre()
+                nowPlaying.id = "1"
+                nowPlaying.name = "Now Playing"
+                var topRate = Genre()
+                topRate.id = "2"
+                topRate.name = "Top Rate"
+                var upComing = Genre()
+                upComing.id = "3"
+                upComing.name = "Up Coming"
+                Collections.reverse(it)
+                (it as ArrayList).add(nowPlaying)
+                it.add(topRate)
+                it.add(upComing)
+                Collections.reverse(it)
+                genreAdapter.swapAdapter(it)
+                shimmerViewContainer.stopShimmer()
+                shimmerViewContainer.visibility = View.GONE
+                viewDataBinding.recyclerGenre.visibility = View.VISIBLE
+            }
+        }, 3000)
     }
 
     private fun showError(message: String?) {
@@ -72,6 +91,9 @@ class GenreFragment : BaseFragment(), GenreItemNavigator {
             when (it) {
                 is Resources.Progress -> {
                     //do something
+                    shimmerViewContainer.startShimmer()
+                    shimmerViewContainer.visibility = View.VISIBLE
+                    viewDataBinding.recyclerGenre.visibility = View.GONE
                 }
                 is Resources.Success -> {
                     showSuccess(it.data?.genres)
@@ -84,11 +106,14 @@ class GenreFragment : BaseFragment(), GenreItemNavigator {
     }
 
     private fun doObserveClickedGenre() {
-        genreViewModel.selectedGenre.observe(this, Observer { event ->
-            event.getContentIfNotHandled()?.let {
-                openGenreMovies(it)
-            }
+        genreViewModel.selectedGenre.observe(this, Observer {
+            openGenreMovies(it[0], it[1])
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        shimmerViewContainer.stopShimmer()
     }
 
     companion object {

@@ -95,6 +95,15 @@ class MoviesPagedDataSource(val moviesRepository: MoviesRepository, val typeMovi
                 getInitalSearchMovies(params, callback, it)
             }
         }
+        if (typeMovie.containsKey(Constants.KEY_PlAYING_MOVIE)) {
+            getInitalPlayingMovies(params,callback)
+        }
+        if (typeMovie.containsKey(Constants.KEY_COMING_MOVIE)) {
+            getInitalComingMovies(params,callback)
+        }
+        if (typeMovie.containsKey(Constants.KEY_TOP_MOVIE)) {
+            getInitalTopMovies(params,callback)
+        }
     }
 
     private fun loadAfterDataByType(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>){
@@ -110,6 +119,15 @@ class MoviesPagedDataSource(val moviesRepository: MoviesRepository, val typeMovi
             typeMovie[Constants.KEY_SEARCH_MOVIE]?.let {
                 getLoadAfterSearchMovies(params, callback, it)
             }
+        }
+        if (typeMovie.containsKey(Constants.KEY_COMING_MOVIE)) {
+            getLoadAfterComingMovies(params, callback)
+        }
+        if (typeMovie.containsKey(Constants.KEY_PlAYING_MOVIE)) {
+            getLoadAfterPlayingMovies(params, callback)
+        }
+        if (typeMovie.containsKey(Constants.KEY_TOP_MOVIE)) {
+            getLoadAfterTopMovies(params, callback)
         }
     }
 
@@ -158,6 +176,51 @@ class MoviesPagedDataSource(val moviesRepository: MoviesRepository, val typeMovi
         )
     }
 
+    fun getInitalPlayingMovies(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
+        networkState.postValue(NetworkState.LOADING)
+        initialLoad.postValue(NetworkState.LOADING)
+        compositeDisposable.add(
+                moviesRepository.getPlayingMovies()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ movies ->
+                            onShowFetched(movies, callback)
+                        }, {
+                            performErrorInitial(params, callback, it)
+                        })
+        )
+    }
+
+    fun getInitalTopMovies(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
+        networkState.postValue(NetworkState.LOADING)
+        initialLoad.postValue(NetworkState.LOADING)
+        compositeDisposable.add(
+                moviesRepository.getTopMovies()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ movies ->
+                            onShowFetched(movies, callback)
+                        }, {
+                            performErrorInitial(params, callback, it)
+                        })
+        )
+    }
+
+    fun getInitalComingMovies(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
+        networkState.postValue(NetworkState.LOADING)
+        initialLoad.postValue(NetworkState.LOADING)
+        compositeDisposable.add(
+                moviesRepository.getComingMovies()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ movies ->
+                            onShowFetched(movies, callback)
+                        }, {
+                            performErrorInitial(params, callback, it)
+                        })
+        )
+    }
+
     fun getLoadAfterPopularMovies(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
         networkState.postValue(NetworkState.LOADING)
         compositeDisposable.add(
@@ -197,6 +260,48 @@ class MoviesPagedDataSource(val moviesRepository: MoviesRepository, val typeMovi
                 }, {
                     performErrorLoadAfter(params, callback, it)
                 })
+        )
+    }
+
+    fun getLoadAfterPlayingMovies(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
+        networkState.postValue(NetworkState.LOADING)
+        compositeDisposable.add(
+                moviesRepository.getPlayingMovies()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ movies ->
+                            onMoreShowFetched(movies, callback)
+                        }, {
+                            performErrorLoadAfter(params, callback, it)
+                        })
+        )
+    }
+
+    fun getLoadAfterTopMovies(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
+        networkState.postValue(NetworkState.LOADING)
+        compositeDisposable.add(
+                moviesRepository.getTopMovies()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ movies ->
+                            onMoreShowFetched(movies, callback)
+                        }, {
+                            performErrorLoadAfter(params, callback, it)
+                        })
+        )
+    }
+
+    fun getLoadAfterComingMovies(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
+        networkState.postValue(NetworkState.LOADING)
+        compositeDisposable.add(
+                moviesRepository.getComingMovies()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ movies ->
+                            onMoreShowFetched(movies, callback)
+                        }, {
+                            performErrorLoadAfter(params, callback, it)
+                        })
         )
     }
 

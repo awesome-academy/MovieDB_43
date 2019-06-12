@@ -2,5 +2,5 @@ package com.asterisk.tuandao.themoviedb.ui.genre
 
 interface GenreItemNavigator {
 
-    fun openGenreMovies(genreId: String)
+    fun openGenreMovies(genreId: String, title: String)
 }

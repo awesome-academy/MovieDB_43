@@ -11,4 +11,6 @@
     <color name="color_text_actor">#B3BDC8</color>
     <color name="color_light_gray">#EFF0F2</color>
     <color name="color_dark_gold">#665900</color>
+    <color name="color_back_arrow">#221E1E</color>
+    <color name="placeholder_bg">#dddddd</color>
 </resources>

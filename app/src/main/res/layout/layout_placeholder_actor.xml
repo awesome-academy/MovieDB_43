@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        app:layout_constraintBottom_toTopOf="@id/textReview"
+        app:layout_constraintTop_toTopOf="@+id/recyclerCast"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerCast"
+        app:layout_constraintStart_toStartOf="@+id/recyclerCast" android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+            android:id="@+id/imageActor"
+            android:layout_width="@dimen/dp_120"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="3:4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/placeholder_bg"
+            app:layout_constraintHorizontal_bias="1.0" android:layout_marginTop="8dp"/>
+
+    <TextView
+            android:id="@+id/textActorName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/lato_bold"
+            tools:background="@color/placeholder_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageActor"
+            tools:text="@string/fake_text_actor_name"/>
+
+    <TextView
+            android:id="@+id/textCharacter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:textColor="@color/color_text_actor"
+            android:fontFamily="@font/lato_light_italic"
+            tools:background="@color/placeholder_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textActorName"
+            tools:text="@string/fake_text_character"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

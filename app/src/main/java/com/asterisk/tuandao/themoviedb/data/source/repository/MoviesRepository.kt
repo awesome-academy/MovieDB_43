@@ -10,8 +10,10 @@ import com.asterisk.tuandao.themoviedb.data.source.MoviesDataSource
 import com.asterisk.tuandao.themoviedb.data.source.local.MoviesLocalDataSource
 import com.asterisk.tuandao.themoviedb.data.source.model.Listing
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
+import com.asterisk.tuandao.themoviedb.data.source.model.respone.MovieResponse
 import com.asterisk.tuandao.themoviedb.data.source.remote.paging.MoviesDataSourceFactory
 import com.asterisk.tuandao.themoviedb.util.Constants
+import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -40,6 +42,12 @@ class MoviesRepository @Inject constructor(
     override fun deleteFavorite(movie: Movie) = moviesLocalDataSource.deleteFavorite(movie)
 
     override fun getFavoriteById(movieId: Int) = moviesLocalDataSource.getFavoriteById(movieId)
+
+    override fun getComingMovies() = moviesRemoteDataSource.getComingMovies()
+
+    override fun getPlayingMovies() = moviesRemoteDataSource.getPlayingMovies()
+
+    override fun getTopMovies() = moviesRemoteDataSource.getTopMovies()
 
     fun getLoadMoviesWithPages(typeMovie: HashMap<Int,String>): LiveData<Listing<Movie>> {
         val sourceFactory = MoviesDataSourceFactory(this, typeMovie)

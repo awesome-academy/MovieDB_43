@@ -19,4 +19,8 @@ object Constants {
     const val KEY_GENRE_MOVIE = 2
     const val KEY_SEARCH_MOVIE = 3
     const val KEY_REVIEW = 4
+    const val KEY_PlAYING_MOVIE = 5
+    const val KEY_TOP_MOVIE = 6
+    const val KEY_COMING_MOVIE = 7
+    const val NOT_YET = "Not Yet"
 }

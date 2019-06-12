@@ -23,8 +23,8 @@ class GenreViewModel @Inject constructor(
     }
     val genres: LiveData<Resources<GenreResponse>>
         get() = _genres
-    private val _selectedGenre = MutableLiveData<Event<String>>()
-    val selectedGenre: LiveData<Event<String>>
+    private val _selectedGenre = MutableLiveData<ArrayList<String>>()
+    val selectedGenre: LiveData<ArrayList<String>>
         get() = _selectedGenre
 
     fun getGenres(mutableLiveData: MutableLiveData<Resources<GenreResponse>>) {
@@ -33,7 +33,10 @@ class GenreViewModel @Inject constructor(
         )
     }
 
-    fun openGenreMovie(genreId: String) {
-        _selectedGenre.value = Event(genreId)
+    fun openGenreMovie(genreId: String, title: String) {
+        val list = ArrayList<String>()
+        list.add(genreId)
+        list.add(title)
+        _selectedGenre.value = list
     }
 }

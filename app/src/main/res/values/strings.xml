@@ -29,4 +29,8 @@
     <string name="title_fav_movies">Favorite Movies</string>
     <string name="title_error">cannot load movie</string>
     <string name="retry">Retry</string>
+    <string name="hint_search">Search for movies</string>
+    <string name="title_popular_movie">Popular Movies</string>
+    <string name="title_duration">132 minutes</string>
+    <string name="genre_movie">Comedy-Family-Romantic</string>
 </resources>

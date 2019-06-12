@@ -17,7 +17,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="@dimen/dp_120"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewmodel.setSelectedActor(actor.id)}">
+            android:onClick="@{() -> viewmodel.setSelectedActor(actor.id)}"
+            android:layout_marginRight="@dimen/dp_16">
 
         <ImageView
                 android:id="@+id/imageActor"
@@ -40,6 +41,7 @@
                 android:text="@{actor.name}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@android:color/white"
+                android:fontFamily="@font/lato_bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageActor"
@@ -53,6 +55,7 @@
                 android:singleLine="true"
                 android:text="@{actor.character}"
                 android:textColor="@color/color_text_actor"
+                android:fontFamily="@font/lato_light_italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textActorName"

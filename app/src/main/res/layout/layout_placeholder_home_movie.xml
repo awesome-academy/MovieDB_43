@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearMovie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_16"
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+            android:id="@+id/imageMovie"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="1.5:2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/placeholder_bg" />
+
+    <TextView
+            android:id="@+id/textMovieTitle"
+            style="@style/textMovieTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:textSize="@dimen/sp_16"
+            android:fontFamily="@font/cardo"
+            android:background="@color/placeholder_bg"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="@id/imageMovie"
+            app:layout_constraintStart_toStartOf="@+id/imageMovie"
+            app:layout_constraintTop_toBottomOf="@id/imageMovie"/>
+
+    <TextView
+            android:id="@+id/textScore"
+            style="@style/textScoreIDMB"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_light_italic"
+            android:background="@color/placeholder_bg"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@id/textMovieTitle"
+            app:layout_constraintTop_toBottomOf="@id/textMovieTitle"
+            tools:text="@string/fake_text_imdb_score" app:layout_constraintEnd_toEndOf="@+id/textMovieTitle"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

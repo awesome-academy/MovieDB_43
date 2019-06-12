@@ -3,6 +3,7 @@ package com.asterisk.tuandao.themoviedb.ui.detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -17,7 +18,9 @@ import com.asterisk.tuandao.themoviedb.data.source.remote.Resources
 import com.asterisk.tuandao.themoviedb.databinding.ActivityDetailBinding
 import com.asterisk.tuandao.themoviedb.ui.actor.ActorActivity
 import com.asterisk.tuandao.themoviedb.util.showMessage
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.layout_movie_detail.*
 import kotlinx.android.synthetic.main.layout_movie_detail.view.*
 import javax.inject.Inject
@@ -30,10 +33,8 @@ class DetailActivity : DaggerAppCompatActivity(), DetailNavigator{
     private lateinit var youtubeVideoFragment: YouTubeVideoFragment
     @Inject
     lateinit var detailViewModel: DetailViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("DetailActivity","DetailActivity $detailViewModel")
         viewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.viewModel = detailViewModel
@@ -76,12 +77,13 @@ class DetailActivity : DaggerAppCompatActivity(), DetailNavigator{
             detailViewModel.isFavorite(it)
         })
         detailViewModel.movie?.observe(this, Observer {
+
             when (it) {
                 is Resources.Progress -> {
                     //do something
                 }
                 is Resources.Success -> {
-                    showSuccess(it.data)
+                        showSuccess(it.data)
                 }
                 is Resources.Failure -> {
                     showError(it.e.message)
@@ -89,8 +91,8 @@ class DetailActivity : DaggerAppCompatActivity(), DetailNavigator{
             }
         })
         detailViewModel.isFavorite.observe(this, Observer {
-            viewDataBinding.movieDetail.buttonLikeFavorite.visibility = if (it) View.INVISIBLE else View.VISIBLE
-            viewDataBinding.movieDetail.buttonDislikeFavorite.visibility = if (!it) View.GONE else View.VISIBLE
+                viewDataBinding.movieDetail.buttonLikeFavorite.visibility = if (it) View.GONE else View.VISIBLE
+                viewDataBinding.movieDetail.buttonDislikeFavorite.visibility = if (!it) View.GONE else View.VISIBLE
         })
     }
 
@@ -140,6 +142,16 @@ class DetailActivity : DaggerAppCompatActivity(), DetailNavigator{
 
     fun showToast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.getIntExtra(MOVIE_ID_TAG, 0)?.let {
+            detailViewModel.setSelectedMovie(it)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+    }
 
     companion object {
         const val MOVIE_ID_TAG = "movie_id"

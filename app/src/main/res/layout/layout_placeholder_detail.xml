@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:background="@color/color_back_ground_home">
+
+    <ImageView
+            android:id="@+id/imageMovie"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp_8"
+            android:scaleType="fitXY"
+            android:background="@color/placeholder_bg"
+            app:layout_constraintDimensionRatio="3:4"
+            app:layout_constraintStart_toStartOf="@+id/guidelineBegin"
+            app:layout_constraintTop_toBottomOf="@id/textTitleMovie"/>
+
+    <TextView
+            android:id="@+id/textTitleMovie"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/color_text_actor"
+            android:layout_marginTop="@dimen/dp_16"
+            android:fontFamily="@font/lato_bold"
+            android:background="@color/placeholder_bg"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintBottom_toTopOf="@+id/imageMovie"
+            app:layout_constraintStart_toStartOf="@id/guidelineBegin"
+            tools:text="@string/fake_text_movie_title"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineBegin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/dp_16"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/dp_16"/>
+
+    <TextView
+            android:id="@+id/textDuration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/imageMovie"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintTop_toBottomOf="@id/textTitleMovie"
+            android:background="@color/placeholder_bg"
+            tools:text="@string/title_duration"
+            android:fontFamily="@font/lato_light_italic"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"/>
+
+    <TextView
+            android:id="@+id/textGenres"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/imageMovie"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintTop_toBottomOf="@id/textDuration"
+            tools:text="@string/genre_movie"
+            android:background="@color/placeholder_bg"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:fontFamily="@font/lato_light_italic"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_8"/>
+
+    <TextView
+            android:id="@+id/textRelease"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_8"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/lato_light_italic"
+            android:background="@color/placeholder_bg"
+
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+            app:layout_constraintStart_toEndOf="@+id/imageMovie"
+            app:layout_constraintTop_toBottomOf="@+id/textGenres"
+            tools:text="@string/default_release_day"/>
+
+    <TextView
+            android:id="@+id/textScore"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_8"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+            app:layout_constraintStart_toEndOf="@+id/imageMovie"
+            app:layout_constraintTop_toBottomOf="@+id/textRelease"
+            android:fontFamily="@font/lato_light_italic"
+            android:background="@color/placeholder_bg"
+            tools:text="@string/fake_text_score_detail"/>
+    <!--<Button-->
+            <!--android:id="@+id/buttonLikeFavorite"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="@dimen/dp_16"-->
+            <!--android:layout_marginLeft="@dimen/dp_16"-->
+            <!--android:layout_marginTop="@dimen/dp_16"-->
+            <!--android:background="@drawable/button_dislike_background"-->
+            <!--android:text="@string/favorite_button"-->
+            <!--android:textColor="@color/color_blue_icon"-->
+            <!--app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"-->
+            <!--app:layout_constraintStart_toEndOf="@+id/imageMovie"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/textScore"/>-->
+
+    <!--<Button-->
+            <!--android:id="@+id/buttonDislikeFavorite"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="@dimen/dp_16"-->
+            <!--android:layout_marginLeft="@dimen/dp_16"-->
+            <!--android:layout_marginTop="@dimen/dp_16"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:fontFamily="@font/cardo"-->
+            <!--android:background="@color/placeholder_bg"-->
+            <!--app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"-->
+            <!--app:layout_constraintStart_toEndOf="@+id/imageMovie"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/textScore"/>-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/relativeDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/color_back_ground_home"
+            android:layout_marginTop="@dimen/dp_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageMovie">
+
+        <TextView
+                android:id="@+id/textOverview"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:fontFamily="@font/cardo_bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white"
+                android:background="@color/placeholder_bg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+                android:id="@+id/textDescription"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginRight="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_16"
+                android:fontFamily="@font/lato_light_italic"
+                android:textColor="@android:color/white"
+                tools:text="@string/fake_text_movie_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:background="@color/placeholder_bg"
+                app:layout_constraintTop_toBottomOf="@id/textOverview"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+            android:id="@+id/textCast"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/dp_16"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/cardo_bold"
+            android:background="@color/placeholder_bg"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@+id/guidelineBegin"
+            app:layout_constraintTop_toBottomOf="@+id/relativeDescription"/>
+
+    <include
+            android:id="@+id/include1"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            layout="@layout/layout_placeholder_actor"
+            app:layout_constraintTop_toTopOf="@+id/recyclerCast"
+            app:layout_constraintStart_toEndOf="@+id/include"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"/>
+    <include
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            layout="@layout/layout_placeholder_actor"
+            app:layout_constraintTop_toBottomOf="@id/textCast"
+            app:layout_constraintStart_toStartOf="@+id/recyclerCast"
+            android:id="@+id/include"/>
+
+    <include
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            layout="@layout/layout_placeholder_actor"
+            android:id="@+id/include2"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintStart_toEndOf="@+id/include1"
+            app:layout_constraintTop_toTopOf="@+id/recyclerCast" android:layout_marginStart="8dp"/>
+
+    <include
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            layout="@layout/layout_placeholder_actor"
+            android:id="@+id/include4"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintStart_toEndOf="@+id/include2"
+            app:layout_constraintTop_toTopOf="@+id/recyclerCast" android:layout_marginStart="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerCast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guidelineBegin"
+            app:layout_constraintTop_toBottomOf="@+id/textCast"
+            app:layout_constraintHorizontal_bias="0.52"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

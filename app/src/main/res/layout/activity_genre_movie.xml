@@ -4,33 +4,56 @@
     <data>
 
         <variable
-            name="viewmodel"
-            type="com.asterisk.tuandao.themoviedb.ui.movies.GenreMovieViewModel" />
+                name="viewmodel"
+                type="com.asterisk.tuandao.themoviedb.ui.movies.GenreMovieViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/color_back_ground_home"
-        tools:context=".ui.movies.GenreMovieActivity">
+                                                       xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                       xmlns:tools="http://schemas.android.com/tools"
+                                                       android:layout_width="match_parent"
+                                                       android:layout_height="match_parent"
+                                                       android:background="@color/color_bold_silver"
+                                                       tools:context=".ui.movies.GenreMovieActivity">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/refresh"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+                android:id="@+id/refresh"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerMovie"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="@dimen/dp_16" />
+                    android:id="@+id/recyclerMovie"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="@dimen/dp_16"/>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerViewContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                <include
+                        android:id="@+id/layout1"
+                        layout="@layout/layout_placeholder_list_movie"/>
+                <include
+                        android:id="@+id/layout2"
+                        layout="@layout/layout_placeholder_list_movie"/>
+                <include
+                        android:id="@+id/layout3"
+                        layout="@layout/layout_placeholder_list_movie"/>
+                <include
+                        android:id="@+id/layout4"
+                        layout="@layout/layout_placeholder_list_movie"/>
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

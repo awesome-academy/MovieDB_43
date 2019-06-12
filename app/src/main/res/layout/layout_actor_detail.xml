@@ -1,103 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-                name="viewmodel"
-                type="com.asterisk.tuandao.themoviedb.ui.actor.ActorViewModel"/>
+            name="viewmodel"
+            type="com.asterisk.tuandao.themoviedb.ui.actor.ActorViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/color_back_ground_home">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_back_ground_home">
 
         <TextView
-                android:id="@+id/textActorName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_16"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@android:color/white"
-                android:text="@{viewmodel.actorRenderView.name}"
-                app:layout_constraintBottom_toTopOf="@+id/imageMovie"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/imageMovie"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/fake_text_actor_name"/>
+            android:id="@+id/textActorName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            android:text="@{viewmodel.actorRenderView.name}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/color_text_actor"
+            android:fontFamily="@font/lato_bold"
+            app:layout_constraintBottom_toTopOf="@+id/imageMovie"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imageMovie"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/fake_text_actor_name" />
 
         <ImageView
-                android:id="@+id/imageMovie"
-                android:layout_width="@dimen/dp_150"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/dp_8"
-                android:scaleType="fitXY"
-                app:imageUrl="@{viewmodel.actorRenderView.profilePath}"
-                app:layout_constraintDimensionRatio="3:4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.15"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textActorName"
-                tools:background="@color/color_primary"/>
+            android:id="@+id/imageMovie"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp_8"
+            android:scaleType="fitXY"
+            app:imageUrl="@{viewmodel.actorRenderView.profilePath}"
+            app:layout_constraintDimensionRatio="3:4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textActorName"
+            tools:background="@color/color_primary" />
 
         <TextView
-                android:id="@+id/textActorBirthday"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_8"
-                android:layout_marginRight="@dimen/dp_8"
-                android:textColor="@android:color/white"
-                app:setTextBirthday="@{viewmodel.actorRenderView.birthday}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imageMovie"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.35"
-                tools:text="@string/info_born"/>
+            android:id="@+id/textActorBirthday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginRight="@dimen/dp_8"
+            android:fontFamily="@font/lato_light_italic"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageMovie"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35"
+            app:setTextBirthday="@{viewmodel.actorRenderView.birthday}"
+            tools:text="@string/info_born" />
 
         <TextView
-                android:id="@+id/textDeath"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_8"
-                android:layout_marginTop="@dimen/dp_16"
-                android:layout_marginRight="@dimen/dp_8"
-                android:textColor="@android:color/white"
-                app:setTextDeathDay="@{viewmodel.actorRenderView.deathday}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imageMovie"
-                app:layout_constraintTop_toBottomOf="@+id/textActorBirthday"
-                tools:text="Death Day: 1323123"/>
+            android:id="@+id/textDeath"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_8"
+            android:fontFamily="@font/lato_light_italic"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageMovie"
+            app:layout_constraintTop_toBottomOf="@+id/textActorBirthday"
+            app:setTextDeathDay="@{viewmodel.actorRenderView.deathday}"
+            tools:text="Death Day: 1323123" />
 
         <TextView
-                android:id="@+id/textPlaceOfBirth"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_8"
-                android:layout_marginTop="@dimen/dp_16"
-                android:layout_marginRight="@dimen/dp_8"
-                android:textColor="@android:color/white"
-                app:setTextPlaceOfBirth="@{viewmodel.actorRenderView.placeOfBirth}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imageMovie"
-                app:layout_constraintTop_toBottomOf="@+id/textDeath"
-                tools:text="@string/info_birth"/>
+            android:id="@+id/textPlaceOfBirth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_8"
+            android:fontFamily="@font/lato_light_italic"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageMovie"
+            app:layout_constraintTop_toBottomOf="@+id/textDeath"
+            app:setTextPlaceOfBirth="@{viewmodel.actorRenderView.placeOfBirth}"
+            tools:text="@string/info_birth" />
 
         <TextView
-                android:id="@+id/textGender"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_8"
-                android:layout_marginTop="@dimen/dp_16"
-                android:layout_marginRight="@dimen/dp_8"
-                android:textColor="@android:color/white"
-                app:setTextGender="@{viewmodel.actorRenderView.gender}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imageMovie"
-                app:layout_constraintTop_toBottomOf="@+id/textPlaceOfBirth"
-                tools:text="@string/info_male"/>
+            android:id="@+id/textGender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_8"
+            android:fontFamily="@font/lato_light_italic"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageMovie"
+            app:layout_constraintTop_toBottomOf="@+id/textPlaceOfBirth"
+            app:setTextGender="@{viewmodel.actorRenderView.gender}"
+            tools:text="@string/info_male" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

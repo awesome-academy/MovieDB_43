@@ -3,6 +3,7 @@ package com.asterisk.tuandao.themoviedb.ui.search
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
@@ -34,6 +35,8 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.viewModel = searchViewModel
         initComponent()
+        viewDataBinding.shimmerViewContainer.visibility = View.GONE
+        viewDataBinding.recyclerSearchMovies.visibility = View.VISIBLE
     }
 
     private fun initComponent() {
@@ -78,6 +81,11 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
 
         searchViewModel.networkState.observe(this, Observer {
             searchAdapter.setNetworkState(it)
+            when(it.status) {
+                Status.RUNNING -> {
+
+                }
+            }
         })
         searchViewModel.refreshState.observe(this, Observer {
             viewDataBinding.refresh.isRefreshing = it == NetworkState.LOADING
@@ -96,9 +104,14 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
     }
 
     private fun showSuccess(data: PagedList<Movie>?) {
-        data?.let {
-            searchAdapter.submitList(it)
-        }
+        Handler().postDelayed({
+            data?.let {
+                searchAdapter.submitList(it)
+                viewDataBinding.shimmerViewContainer.stopShimmer()
+                viewDataBinding.shimmerViewContainer.visibility = View.GONE
+                viewDataBinding.recyclerSearchMovies.visibility = View.VISIBLE
+            }
+        },2000)
     }
 
     private fun showError(message: String?) {
@@ -111,6 +124,9 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
         if (query!!.isEmpty()) return false
         searchAdapter.submitList(null)
         searchViewModel.setKeySearch(query)
+        viewDataBinding.shimmerViewContainer.startShimmer()
+        viewDataBinding.shimmerViewContainer.visibility = View.VISIBLE
+        viewDataBinding.recyclerSearchMovies.visibility = View.GONE
         return true
     }
 
@@ -118,6 +134,9 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
         if (query!!.isEmpty()) return false
         searchAdapter.submitList(null)
         searchViewModel.setKeySearch(query)
+        viewDataBinding.shimmerViewContainer.startShimmer()
+        viewDataBinding.shimmerViewContainer.visibility = View.VISIBLE
+        viewDataBinding.recyclerSearchMovies.visibility = View.GONE
         return true
     }
 
@@ -125,6 +144,11 @@ class SearchActivity : DaggerAppCompatActivity(), SearchView.OnQueryTextListener
         DetailActivity.getIntent(this, movieId).apply {
             startActivity(this)
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewDataBinding.shimmerViewContainer.stopShimmer()
     }
 
     companion object {

@@ -1,6 +1,9 @@
 package com.asterisk.tuandao.themoviedb.ui.movies
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.MenuItem
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -8,12 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.asterisk.tuandao.themoviedb.R
 import com.asterisk.tuandao.themoviedb.adapter.MovieAdapter
 import com.asterisk.tuandao.themoviedb.data.source.model.Movie
 import com.asterisk.tuandao.themoviedb.data.source.remote.NetworkState
-import com.asterisk.tuandao.themoviedb.data.source.remote.Status
 import com.asterisk.tuandao.themoviedb.databinding.ActivityGenreMovieBinding
 import com.asterisk.tuandao.themoviedb.ui.detail.DetailActivity
 import com.asterisk.tuandao.themoviedb.util.Constants
@@ -35,8 +38,11 @@ class GenreMovieActivity : DaggerAppCompatActivity(), GenreMovieNavigator {
             it.setDisplayHomeAsUpEnabled(true)
             it.setDefaultDisplayHomeAsUpEnabled(true)
         }
-        intent.getStringExtra(Constants.GENRE_ID_TAG)?.let {
+        intent.getStringExtra(GENRE_ID_TAG)?.let {
             genreMovieViewModel.setSelectedGenre(it)
+        }
+        intent.getStringExtra(GENRE_TITLE_TAG)?.let {
+            actionBar?.title = it
         }
         viewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_genre_movie)
         initAdapter()
@@ -57,14 +63,12 @@ class GenreMovieActivity : DaggerAppCompatActivity(), GenreMovieNavigator {
     }
 
     private fun initAdapter() {
-        genreMovieAdapter = MovieAdapter(this, R.layout.item_genre_movie,
-                genreMovieViewModel) { genreMovieViewModel.retry() }
+        genreMovieAdapter = MovieAdapter(
+            this, R.layout.item_genre_movie,
+            genreMovieViewModel
+        ) { genreMovieViewModel.retry() }
         with(viewDataBinding) {
-            recyclerMovie.layoutManager = GridLayoutManager(
-                    this@GenreMovieActivity,
-                    Constants.SPAN_COUNT
-            )
-            recyclerMovie.addItemDecoration(DividerItemDecoration(this@GenreMovieActivity, 0))
+            recyclerMovie.layoutManager = LinearLayoutManager(this@GenreMovieActivity, RecyclerView.VERTICAL, false)
             recyclerMovie.adapter = genreMovieAdapter
         }
     }
@@ -80,13 +84,21 @@ class GenreMovieActivity : DaggerAppCompatActivity(), GenreMovieNavigator {
             }
         })
         genreMovieViewModel.movies.observe(this, Observer {
-            showSuccess(it)
+            Handler().postDelayed({
+                showSuccess(it)
+                viewDataBinding.shimmerViewContainer.stopShimmer()
+                viewDataBinding.shimmerViewContainer.visibility = View.GONE
+                viewDataBinding.recyclerMovie.visibility = View.VISIBLE
+            },2000)
         })
         genreMovieViewModel.networkState.observe(this, Observer {
             genreMovieAdapter.setNetworkState(it)
         })
         genreMovieViewModel.refreshState.observe(this, Observer {
             viewDataBinding.refresh.isRefreshing = it == NetworkState.LOADING
+            viewDataBinding.shimmerViewContainer.startShimmer()
+            viewDataBinding.shimmerViewContainer.visibility = View.VISIBLE
+            viewDataBinding.recyclerMovie.visibility = View.GONE
         })
         viewDataBinding.refresh.setOnRefreshListener {
             genreMovieViewModel.refresh()
@@ -97,9 +109,9 @@ class GenreMovieActivity : DaggerAppCompatActivity(), GenreMovieNavigator {
         data?.let {
             genreMovieAdapter.submitList(it)
             while (viewDataBinding.recyclerMovie.itemDecorationCount > 0
-                    && (viewDataBinding.recyclerMovie.getItemDecorationAt(
-                            0
-                    )?.let { itemDecoration = it }) != null
+                && (viewDataBinding.recyclerMovie.getItemDecorationAt(
+                    0
+                )?.let { itemDecoration = it }) != null
             ) {
                 viewDataBinding.recyclerMovie.removeItemDecoration(itemDecoration!!)
             }
@@ -110,5 +122,16 @@ class GenreMovieActivity : DaggerAppCompatActivity(), GenreMovieNavigator {
         message?.let {
             this?.showMessage(it)
         }
+    }
+
+    companion object {
+        const val GENRE_ID_TAG = "genre_id"
+        const val GENRE_TITLE_TAG = "genre_title"
+        fun getIntent(context: Context, genreId: String, title: String) =
+            Intent(context, GenreMovieActivity::class.java)
+                .apply {
+                    putExtra(GENRE_ID_TAG, genreId)
+                    putExtra(GENRE_TITLE_TAG, title)
+                }
     }
 }

@@ -8,6 +8,7 @@ import com.asterisk.tuandao.themoviedb.data.source.model.respone.GenreResponse
 import com.asterisk.tuandao.themoviedb.data.source.model.respone.MovieResponse
 import io.reactivex.Observable
 import io.reactivex.Single
+import retrofit2.http.GET
 
 interface MoviesDataSource {
 
@@ -25,5 +26,8 @@ interface MoviesDataSource {
         fun getMoviesById(page: Int, append: String): Single<Movie>
         fun getPersonById(personId: Int, append: String): Single<ActorResponse>
         fun searchMovieByName(key: String, page: Int): Single<MovieResponse>
+        fun getPlayingMovies(): Single<MovieResponse>
+        fun getTopMovies(): Single<MovieResponse>
+        fun getComingMovies(): Single<MovieResponse>
     }
 }

@@ -34,12 +34,12 @@ class GenreMovieAdapter(private var movies: List<Movie>, val genreMovieViewModel
         genreMovieViewModel: GenreMovieViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.viewmodel = genreMovieViewModel
+            binding.viewModel = genreMovieViewModel
         }
 
         fun bindView(data: Movie?) {
             binding.run {
-                movie = data
+                this.data = data
             }
         }
     }
