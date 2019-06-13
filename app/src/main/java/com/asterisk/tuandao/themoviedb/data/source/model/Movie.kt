@@ -1,6 +1,7 @@
 package com.asterisk.tuandao.themoviedb.data.source.model
 
 import com.asterisk.tuandao.themoviedb.data.source.model.respone.CastResult
+import com.asterisk.tuandao.themoviedb.data.source.model.respone.ReviewResult
 import com.asterisk.tuandao.themoviedb.data.source.model.respone.VideoResult
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -48,7 +49,7 @@ class Movie {
 
     @SerializedName("vote_average")
     @Expose
-    val voteAverage: Float = 0.toFloat()
+    val voteAverage: Float = 0.0f
 
     @SerializedName("videos")
     @Expose
@@ -57,4 +58,8 @@ class Movie {
     @SerializedName("credits")
     @Expose
     val castResult: CastResult? = null
+
+    @SerializedName("reviews")
+    @Expose
+    val reviewResult: ReviewResult? = null
 }
